@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { LegacyPage } from "@/components/layout/LegacyPage";
+import { ExtractedMainView } from "@/components/layout/ExtractedMainView";
+import { legacyMetaTitle } from "@/lib/html-text";
 import { getAllTags, getTag } from "@/lib/tags";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  return getAllTags().map((tag) => ({ slug: tag.slug }));
+export function generateStaticParams() {
+  return getAllTags().map((t) => ({ slug: t.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const tag = getTag(slug);
   if (!tag) return { title: "Not Found" };
-  return { title: tag.title };
+  return { title: legacyMetaTitle(tag.title) };
 }
 
 export default async function TagPage({ params }: PageProps) {
@@ -24,7 +25,7 @@ export default async function TagPage({ params }: PageProps) {
   if (!tag) notFound();
 
   return (
-    <LegacyPage
+    <ExtractedMainView
       mainHtml={tag.mainHtml}
       bodyClass={tag.bodyClass}
       cssHash={tag.cssHash}

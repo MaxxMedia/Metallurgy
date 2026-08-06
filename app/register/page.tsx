@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { LegacyPage } from "@/components/layout/LegacyPage";
+import { ExtractedMainView } from "@/components/layout/ExtractedMainView";
+import { legacyMetaTitle } from "@/lib/html-text";
 import { getPage } from "@/lib/pages";
 
 const SLUG = "register";
 
-export async function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Metadata {
   const page = getPage(SLUG);
   if (!page) return { title: "Not Found" };
-  return { title: page.title };
+  return { title: legacyMetaTitle(page.title) };
 }
 
 export default function RegisterPage() {
@@ -16,7 +17,7 @@ export default function RegisterPage() {
   if (!page) notFound();
 
   return (
-    <LegacyPage
+    <ExtractedMainView
       mainHtml={page.mainHtml}
       bodyClass={page.bodyClass}
       cssHash={page.cssHash}
