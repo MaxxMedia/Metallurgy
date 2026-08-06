@@ -37,6 +37,6 @@ Use `lib/api.ts` in new code:
 - `getFeatured()`, `getTrending()`, `getFeaturedPosts()`, `getTrendingPosts()`
 - `getMenu()`, `getSettings()`, `getAdvertisements()`, `getSidebarWidgets()`
 
-Legacy routes still render `content/**/*.html` via `LegacyPage` — **UI unchanged**.
+Legacy routes render React views from `data/*.json` via `ThemeLayout` (theme CSS/JS only — no `dangerouslySetInnerHTML` for page content).
 
 Types: `types/data.ts`.

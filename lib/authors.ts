@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { readMainHtmlFile } from "@/lib/read-main-html";
 
 export type AuthorMeta = {
   slug: string;
@@ -30,10 +31,11 @@ export function getAuthor(slug: string): (AuthorMeta & { mainHtml: string }) | n
   if (!meta) return null;
 
   const htmlPath = path.join(AUTHORS_DIR, `${slug}.html`);
-  if (!fs.existsSync(htmlPath)) return null;
+  const mainHtml = readMainHtmlFile(htmlPath);
+  if (!mainHtml) return null;
 
   return {
     ...meta,
-    mainHtml: fs.readFileSync(htmlPath, "utf8"),
+    mainHtml,
   };
 }

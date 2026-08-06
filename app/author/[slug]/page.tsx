@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { LegacyPage } from "@/components/layout/LegacyPage";
+import { ExtractedMainView } from "@/components/layout/ExtractedMainView";
 import { getAllAuthors, getAuthor } from "@/lib/authors";
+import { legacyMetaTitle } from "@/lib/html-text";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  return getAllAuthors().map((author) => ({ slug: author.slug }));
+export function generateStaticParams() {
+  return getAllAuthors().map((a) => ({ slug: a.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const author = getAuthor(slug);
   if (!author) return { title: "Not Found" };
-  return { title: author.title };
+  return { title: legacyMetaTitle(author.title) };
 }
 
 export default async function AuthorPage({ params }: PageProps) {
@@ -24,7 +25,7 @@ export default async function AuthorPage({ params }: PageProps) {
   if (!author) notFound();
 
   return (
-    <LegacyPage
+    <ExtractedMainView
       mainHtml={author.mainHtml}
       bodyClass={author.bodyClass}
       cssHash={author.cssHash}

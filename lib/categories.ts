@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { readMainHtmlFile } from "@/lib/read-main-html";
 import { getCategoryBySlug as getCategoryFromApi } from "@/lib/api";
 
 export type CategoryMeta = {
@@ -31,11 +32,12 @@ export function getCategory(slug: string): (CategoryMeta & { mainHtml: string })
   if (!meta) return null;
 
   const htmlPath = path.join(CATEGORIES_DIR, `${slug}.html`);
-  if (!fs.existsSync(htmlPath)) return null;
+  const mainHtml = readMainHtmlFile(htmlPath);
+  if (!mainHtml) return null;
 
   return {
     ...meta,
-    mainHtml: fs.readFileSync(htmlPath, "utf8"),
+    mainHtml,
   };
 }
 

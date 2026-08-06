@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { LegacyPage } from "@/components/layout/LegacyPage";
+import { ExtractedMainView } from "@/components/layout/ExtractedMainView";
 import { getYearArchive } from "@/lib/date-archives";
+import { legacyMetaTitle } from "@/lib/html-text";
 
 const YEAR = "2025";
 
-export async function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Metadata {
   const archive = getYearArchive(YEAR);
   if (!archive) return { title: "Not Found" };
-  return { title: archive.title };
+  return { title: legacyMetaTitle(archive.title) };
 }
 
 export default function YearArchivePage() {
@@ -16,7 +17,7 @@ export default function YearArchivePage() {
   if (!archive) notFound();
 
   return (
-    <LegacyPage
+    <ExtractedMainView
       mainHtml={archive.mainHtml}
       bodyClass={archive.bodyClass}
       cssHash={archive.cssHash}

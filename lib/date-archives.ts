@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { readMainHtmlFile } from "@/lib/read-main-html";
 
 export type DateArchiveMeta = {
   key: string;
@@ -27,8 +28,7 @@ function getIndex(): DateArchiveMeta[] {
 
 function loadMainHtml(key: string): string | null {
   const htmlPath = path.join(ARCHIVES_DIR, `${key}.html`);
-  if (!fs.existsSync(htmlPath)) return null;
-  return fs.readFileSync(htmlPath, "utf8");
+  return readMainHtmlFile(htmlPath);
 }
 
 export function getYearArchive(year: string) {
