@@ -15,34 +15,34 @@ export function PostMeta({
   showDate = false,
 }: PostMetaProps) {
   return (
-    <ul className="fpg-post-meta">
-      <li>
-        <span className="fpg-meta">
-          <span>
-            By{" "}
-            <Link href={author.url} className="fpg-author-link">
-              {author.name}
-            </Link>
-          </span>
-        </span>
-      </li>
-      <li>
-        <span className="fpg-meta">
-          <i className="ri-pulse-fill" /> {views} Views
-        </span>
-      </li>
+    <div className="flex items-center flex-wrap gap-x-3 gap-y-1 text-xs text-slate-400 font-medium">
+      <div className="flex items-center gap-1">
+        <span>By</span>
+        <Link
+          href={author.url}
+          className="text-slate-200 hover:text-emerald-400 font-semibold transition-colors"
+        >
+          {author.name}
+        </Link>
+      </div>
+
+      <div className="flex items-center gap-1">
+        <i className="ri-pulse-fill text-emerald-400 text-sm"></i>
+        <span>{views} views</span>
+      </div>
+
       {showDate && dateISO ? (
-        <li>
-          <span className="fpg-meta">
-            <i className="ri-calendar-line" />{" "}
+        <div className="flex items-center gap-1">
+          <i className="ri-calendar-line text-slate-500 text-sm"></i>
+          <span>
             {new Date(dateISO).toLocaleDateString("en-US", {
-              month: "long",
+              month: "short",
               day: "numeric",
               year: "numeric",
             })}
           </span>
-        </li>
+        </div>
       ) : null}
-    </ul>
+    </div>
   );
 }

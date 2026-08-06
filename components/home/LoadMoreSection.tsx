@@ -45,36 +45,38 @@ export function LoadMoreSection({
   };
 
   return (
-    <>
-      {allShown.map((post) => (
-        <PostCard
-          key={post.id}
-          post={post}
-          authors={authors}
-          categories={categories}
-          variant="three"
-          titleTag="h4"
-          showExcerpt
-        />
-      ))}
-      <div className="fpg-loadmore-wrapper">
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {allShown.map((post) => (
+          <PostCard
+            key={post.id}
+            post={post}
+            authors={authors}
+            categories={categories}
+            variant="three"
+            titleTag="h4"
+            showExcerpt
+          />
+        ))}
+      </div>
+
+      <div className="text-center pt-4">
         {!done && hasMore ? (
           <button
             type="button"
-            className="fpg-loadmore-btn"
             onClick={onLoadMore}
             disabled={loading}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 text-white font-bold text-sm hover:text-emerald-400 transition-all shadow-lg disabled:opacity-50"
           >
-            Load More <i className="ri-loop-left-line" />
+            <span>{loading ? "Loading..." : "Load More Articles"}</span>
+            <i className={`ri-refresh-line ${loading ? "animate-spin" : ""}`}></i>
           </button>
-        ) : null}
-        <span
-          className="fpg-load-complete-text"
-          style={{ display: done || !hasMore ? undefined : "none" }}
-        >
-          🥰 That&apos;s all for now!
-        </span>
+        ) : (
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest py-3">
+            ✨ You&apos;ve reached the end of this list
+          </p>
+        )}
       </div>
-    </>
+    </div>
   );
 }

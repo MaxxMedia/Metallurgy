@@ -1,29 +1,10 @@
-import { EChild, EInner, EParent } from "@/components/home/elementor/ElementorCon";
-import { HomeDecorImages } from "@/components/home/HomeDecorImages";
 import { HomeNewsletterForm } from "@/components/home/HomeNewsletterForm";
 
-/** Full-width newsletter block (`f12b084`) at bottom of home. */
 export function HomeNewsletterBand() {
   return (
-    <EParent
-      id="f12b084"
-      className="e-flex e-con-boxed"
-      dataSettings={{ background_background: "classic" }}
-    >
-      <EInner>
-        <EChild id="ef71355" className="e-con-full e-flex">
-          <EChild
-            id="db9a700"
-            className="e-con-full e-flex"
-            dataSettings={{ background_background: "classic" }}
-          >
-            <EChild id="ac8d978" className="e-con-full e-flex">
-              <HomeNewsletterForm />
-            </EChild>
-            <HomeDecorImages />
-          </EChild>
-        </EChild>
-      </EInner>
-    </EParent>
+    <section className="my-12 relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-emerald-950/40 border border-slate-800 p-8 sm:p-12 shadow-2xl">
+      <div className="absolute top-0 right-0 -mt-8 -mr-8 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <HomeNewsletterForm />
+    </section>
   );
 }

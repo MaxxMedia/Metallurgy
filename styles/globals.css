@@ -1,202 +1,30 @@
-/* Minimal Next shell — Nerio / Elementor CSS controls the UI */
-html,
-body {
-  margin: 0;
-  padding: 0;
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary: #10b981;
+    --primary-hover: #059669;
+    --bg-dark: #0f172a;
+    --card-dark: #1e293b;
+    --text-muted: #94a3b8;
+  }
+
+  body {
+    @apply bg-gray-950 text-gray-100 font-sans antialiased selection:bg-emerald-500 selection:text-white min-h-screen flex flex-col;
+  }
 }
 
-/* Home contact promo (Elementor image 6925) — full-width banner */
-.elementor-element-008612d .elementor-widget-container img,
-.elementor-element-008612d img {
-  width: 100%;
-  height: auto;
-  display: block;
+/* Custom scrollbar and animations */
+::-webkit-scrollbar {
+  width: 8px;
 }
-
-.elementor-element-eff206a .fpg-subscribe-form,
-.elementor-element-newsletter-form .wpcf7-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+::-webkit-scrollbar-track {
+  background: #0f172a;
 }
-
-.elementor-element-newsletter-form input[type="email"] {
-  width: 100%;
-  padding: 0.65rem 0.85rem;
-  border: 1px solid var(--borderColor, #e5e5e5);
+::-webkit-scrollbar-thumb {
+  background: #334155;
   border-radius: 4px;
 }
-
-.elementor-element-newsletter-form .wpcf7-submit {
-  cursor: pointer;
-  padding: 0.65rem 1rem;
-  background: var(--primaryColor, #0073ff);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-}
-
-/* Home hero — main banner + Recent News sidebar (mirror layout) */
-.elementor-302 .elementor-element-0ae4417 {
-  flex-wrap: nowrap;
-  align-items: stretch;
-}
-
-.elementor-302 .elementor-element-c8545b8.home-hero-banner,
-.elementor-302 .elementor-element-c8545b8.home-hero-banner > .elementor-motion-effects-container > .elementor-motion-effects-layer {
-  background-image: var(--homeHeroBanner) !important;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.elementor-302 .elementor-element-c8545b8 {
-  flex: 1 1 auto;
-  min-width: 0;
-  width: auto;
-  max-width: none;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.elementor-302 .elementor-element-624f3f5 {
-  width: 650px;
-  max-width: 100%;
-  flex-shrink: 0;
-}
-
-.elementor-302 .elementor-element-11aa2d4 {
-  width: 100%;
-  max-width: 930px;
-}
-
-.elementor-302 .elementor-element-8e9f4c7 {
-  flex: 0 0 530px;
-  width: 530px;
-  max-width: 530px;
-  flex-shrink: 0;
-  align-self: stretch;
-  flex-direction: column;
-  align-items: stretch;
-}
-
-.elementor-302 .elementor-element-70364f7 {
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  flex-shrink: 0;
-}
-
-.elementor-302 .elementor-element-70364f7 > .elementor-element-67a666a {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.elementor-302 .elementor-element-70364f7 > .elementor-element-67a666a .elementor-heading-title {
-  white-space: nowrap;
-}
-
-.elementor-302 .elementor-element-70364f7 > .elementor-element-239add3 {
-  flex: 0 0 auto;
-}
-
-.elementor-302 .elementor-element-8e9f4c7 > .elementor-element-e5338fb {
-  width: 100%;
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.elementor-302 .elementor-element-5d4aa55 .fpg-card-style.style-two {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-.elementor-302 .elementor-element-e5338fb .fpg-post-group.fpg-post-group-four {
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
-.elementor-302 .elementor-element-e5338fb .fpg-card-style.style-two {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-.elementor-302 .elementor-element-e5338fb .fpg-card-style.style-floating.card-large {
-  min-height: 220px;
-}
-
-@media (max-width: 1200px) {
-  .elementor-302 .elementor-element-8e9f4c7 {
-    flex: 0 0 400px;
-    width: 400px;
-    max-width: 400px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .elementor-302 .elementor-element-0ae4417 {
-    flex-wrap: wrap;
-  }
-
-  .elementor-302 .elementor-element-8e9f4c7 {
-    flex: 1 1 100%;
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-/* Top of This Week — two-column row (main + sticky sidebar stack) */
-.elementor-302 .elementor-element-c03d65c {
-  align-items: flex-start;
-}
-
-.elementor-302 .elementor-element-ca280db {
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  align-self: flex-start;
-  width: 100%;
-  max-width: 400px;
-  flex-shrink: 0;
-  gap: 20px;
-}
-
-.elementor-302 .elementor-element-ca280db > .elementor-element-e1af41a,
-.elementor-302 .elementor-element-ca280db > .elementor-element-08e5b41,
-.elementor-302 .elementor-element-ca280db > .elementor-element-f6aed01 {
-  width: 100%;
-  max-width: 100%;
-  flex-shrink: 0;
-}
-
-.elementor-302 .elementor-element-4849007 {
-  flex: 1 1 auto;
-  min-width: 0;
-  width: auto;
-  max-width: 100%;
-}
-
-.elementor-302 .elementor-element-0bbdd89 .fpg-post-categories {
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  width: 100%;
-}
-
-.elementor-302 .elementor-element-0bbdd89 .fpg-post-categories .fpg-cat-item {
-  width: 100%;
-  min-width: 0;
-}
-
-.elementor-302 .elementor-element-c7e4c3e .fpg-card-style.style-two {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-@media (max-width: 1024px) {
-  .elementor-302 .elementor-element-ca280db {
-    max-width: 100%;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }
