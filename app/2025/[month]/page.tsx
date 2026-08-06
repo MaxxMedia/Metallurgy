@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ExtractedMainView } from "@/components/layout/ExtractedMainView";
-import { getAllMonthArchives, getMonthArchive } from "@/lib/date-archives";
-import { legacyMetaTitle } from "@/lib/html-text";
+import { getAllMonthArchives } from "@/lib/date-archives";
+import {
+  loadMonthArchivePage,
+  mirrorNotFoundMetadata,
+  mirrorPageMetadata,
+  MirrorPageView,
+  mirrorPageOrNotFound,
+} from "@/lib/content";
 
 type PageProps = {
   params: Promise<{ month: string }>;
@@ -18,24 +23,15 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { month } = await params;
-  const archive = getMonthArchive(YEAR, month);
-  if (!archive) return { title: "Not Found" };
-  return { title: legacyMetaTitle(archive.title) };
+  const page = loadMonthArchivePage(YEAR, month);
+  if (!page) return mirrorNotFoundMetadata();
+  return mirrorPageMetadata(page.title);
 }
 
 export default async function MonthArchivePage({ params }: PageProps) {
   const { month } = await params;
   if (!/^\d{2}$/.test(month)) notFound();
 
-  const archive = getMonthArchive(YEAR, month);
-  if (!archive) notFound();
-
-  return (
-    <ExtractedMainView
-      mainHtml={archive.mainHtml}
-      bodyClass={archive.bodyClass}
-      cssHash={archive.cssHash}
-      jsHash={archive.jsHash}
-    />
-  );
+  const page = mirrorPageOrNotFound(loadMonthArchivePage(YEAR, month));
+  return <MirrorPageView page={page} />;
 }

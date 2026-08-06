@@ -1,27 +1,21 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { ExtractedMainView } from "@/components/layout/ExtractedMainView";
-import { getYearArchive } from "@/lib/date-archives";
-import { legacyMetaTitle } from "@/lib/html-text";
+import {
+  loadYearArchivePage,
+  mirrorNotFoundMetadata,
+  mirrorPageMetadata,
+  MirrorPageView,
+  mirrorPageOrNotFound,
+} from "@/lib/content";
 
 const YEAR = "2025";
 
 export function generateMetadata(): Metadata {
-  const archive = getYearArchive(YEAR);
-  if (!archive) return { title: "Not Found" };
-  return { title: legacyMetaTitle(archive.title) };
+  const page = loadYearArchivePage(YEAR);
+  if (!page) return mirrorNotFoundMetadata();
+  return mirrorPageMetadata(page.title);
 }
 
 export default function YearArchivePage() {
-  const archive = getYearArchive(YEAR);
-  if (!archive) notFound();
-
-  return (
-    <ExtractedMainView
-      mainHtml={archive.mainHtml}
-      bodyClass={archive.bodyClass}
-      cssHash={archive.cssHash}
-      jsHash={archive.jsHash}
-    />
-  );
+  const page = mirrorPageOrNotFound(loadYearArchivePage(YEAR));
+  return <MirrorPageView page={page} />;
 }
