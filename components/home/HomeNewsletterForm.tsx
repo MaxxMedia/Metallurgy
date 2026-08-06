@@ -1,98 +1,69 @@
-import { EWidget } from "@/components/home/elementor/ElementorCon";
+"use client";
 
-const SUBMIT_ARROW = (
-  <>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 12">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M16.2079 5.0991C14.0115 5.0991 12.0097 3.0991 12.0097 0.900901V0H10.2079V0.900901C10.2079 2.4991 10.9088 3.9982 12.0088 5.0991H0.892578V6.9009H12.0088C10.9088 8.0018 10.2079 9.5009 10.2079 11.0991V12H12.0097V11.0991C12.0097 8.9018 14.0115 6.9009 16.2079 6.9009H17.1088V5.0991H16.2079Z"
-      />
-    </svg>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 12">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M16.2079 5.0991C14.0115 5.0991 12.0097 3.0991 12.0097 0.900901V0H10.2079V0.900901C10.2079 2.4991 10.9088 3.9982 12.0088 5.0991H0.892578V6.9009H12.0088C10.9088 8.0018 10.2079 9.5009 10.2079 11.0991V12H12.0097V11.0991C12.0097 8.9018 14.0115 6.9009 16.2079 6.9009H17.1088V5.0991H16.2079Z"
-      />
-    </svg>
-  </>
-);
+import { useState } from "react";
 
-/** Full-width newsletter (`f12b084` / `db9a700`) — mirror CF7 markup. */
 export function HomeNewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [agreed, setAgreed] = useState(true);
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email && agreed) {
+      setSubscribed(true);
+    }
+  };
+
   return (
-    <>
-      <EWidget id="cc1f6e3" widgetType="heading" bareContainer>
-        <h3 className="elementor-heading-title elementor-size-default">
-          Subscribe News Updates!
-        </h3>
-      </EWidget>
-      <EWidget
-        id="9bc6f93"
-        widgetType="fpg-cf7"
-        className="elementor-widget__width-initial elementor-widget-mobile__width-inherit"
-      >
-        <div className="wpcf7 no-js" id="wpcf7-f709-p302-o1" lang="en-US" dir="ltr">
-          <form
-            action="/#wpcf7-f709-p302-o1"
-            method="post"
-            className="wpcf7-form init"
-            aria-label="Contact form"
-            noValidate
-          >
-            <fieldset className="hidden-fields-container">
-              <input type="hidden" name="_wpcf7" value="709" />
-              <input type="hidden" name="_wpcf7_version" value="6.1.6" />
-              <input type="hidden" name="_wpcf7_locale" value="en_US" />
-              <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f709-p302-o1" />
-              <input type="hidden" name="_wpcf7_container_post" value="302" />
-              <input type="hidden" name="_wpcf7_posted_data_hash" value="" />
-            </fieldset>
-            <p>
-              <span className="wpcf7-form-control-wrap" data-name="your-email">
-                <input
-                  size={40}
-                  maxLength={400}
-                  className="wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-email"
-                  autoComplete="email"
-                  aria-required="true"
-                  placeholder="Enter your email..."
-                  type="email"
-                  name="your-email"
-                />
-              </span>
-            </p>
-            <div className="form-btn-area">
-              <p>
-                <input
-                  className="wpcf7-form-control wpcf7-submit has-spinner"
-                  type="submit"
-                  value="subscribe"
-                />
-                <em>
-                  <br /> {SUBMIT_ARROW}
-                </em>
-              </p>
-            </div>
-            <p>
-              <span className="wpcf7-form-control-wrap" data-name="your-consent">
-                <span className="wpcf7-form-control wpcf7-acceptance">
-                  <span className="wpcf7-list-item">
-                    <label>
-                      <input type="checkbox" name="your-consent" value="1" />
-                      <span className="wpcf7-list-item-label">
-                        I have read and agree to the <a href="#"> terms &amp; conditions</a>
-                      </span>
-                    </label>
-                  </span>
-                </span>
-              </span>
-            </p>
-            <div className="wpcf7-response-output" aria-hidden="true" />
-          </form>
+    <div className="w-full max-w-xl mx-auto space-y-4 text-center sm:text-left">
+      <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        Subscribe to News Updates!
+      </h3>
+      <p className="text-sm text-slate-400">
+        Join over 50,000+ tech professionals receiving daily digests on AI, software, and robotics.
+      </p>
+
+      {subscribed ? (
+        <div className="p-4 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold text-sm">
+          <i className="ri-checkbox-circle-fill text-lg align-middle mr-2"></i>
+          Thank you for subscribing! You will now receive daily updates.
         </div>
-      </EWidget>
-    </>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div className="flex flex-col sm:flex-row gap-2">
+            <input
+              type="email"
+              required
+              placeholder="Enter your email address..."
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="flex-1 px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+            />
+            <button
+              type="submit"
+              className="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl text-sm transition-colors shadow-lg flex items-center justify-center gap-2 group"
+            >
+              <span>Subscribe</span>
+              <i className="ri-send-plane-fill group-hover:translate-x-0.5 transition-transform"></i>
+            </button>
+          </div>
+
+          <label className="flex items-center gap-2 text-xs text-slate-400 cursor-pointer justify-center sm:justify-start">
+            <input
+              type="checkbox"
+              checked={agreed}
+              onChange={(e) => setAgreed(e.target.checked)}
+              className="rounded border-slate-800 bg-slate-950 text-emerald-500 focus:ring-emerald-500"
+            />
+            <span>
+              I have read and agree to the{" "}
+              <a href="/about-us" className="underline text-emerald-400 hover:text-emerald-300">
+                terms &amp; conditions
+              </a>
+            </span>
+          </label>
+        </form>
+      )}
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import type { Author, Category, Post } from "@/types/data";
 import { PostCard } from "@/components/fpg/PostCard";
 
@@ -11,76 +11,53 @@ type PostSliderProps = {
 };
 
 export function PostSlider({ posts, authors, categories }: PostSliderProps) {
-  const rootRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-
-    const tryInit = () => {
-      const Swiper = (
-        window as Window & {
-          Swiper?: new (
-            el: string | HTMLElement,
-            opts?: object,
-          ) => { destroy: () => void };
-        }
-      ).Swiper;
-      if (!Swiper) return;
-      const el = root.querySelector<HTMLElement>(".fpg-post-slider.swiper");
-      if (!el || el.dataset.swiperInitialized) return;
-      el.dataset.swiperInitialized = "1";
-      new Swiper(el, {
-        slidesPerView: 4,
-        spaceBetween: 24,
-        loop: posts.length > 4,
-        navigation: {
-          nextEl: root.querySelector(".swiper-button-next"),
-          prevEl: root.querySelector(".swiper-button-prev"),
-        },
-        breakpoints: {
-          0: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1366: { slidesPerView: 4 },
-        },
-      });
-    };
-
-    tryInit();
-    const t = window.setInterval(tryInit, 300);
-    window.setTimeout(() => window.clearInterval(t), 12_000);
-    return () => window.clearInterval(t);
-  }, [posts]);
+  const scroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === "left" ? -350 : 350;
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
 
   return (
-    <div
-      ref={rootRef}
-      className="elementor-element elementor-element-ad90ba2 elementor-widget elementor-widget-fpg-post-slider"
-      data-id="ad90ba2"
-      data-element_type="widget"
-      data-widget_type="fpg-post-slider.default"
-    >
-      <div className="elementor-widget-container">
-        <div id="fpg-unique-slider-id-ad90ba2" className="fpg-unique-slider">
-          <div className="fpg-post-slider swiper" dir="ltr">
-            <div className="swiper-wrapper">
-              {posts.map((post) => (
-                <div key={post.id} className="swiper-slide">
-                  <PostCard
-                    post={post}
-                    authors={authors}
-                    categories={categories}
-                    variant="floating"
-                    titleTag="h5"
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="swiper-button-prev" />
-            <div className="swiper-button-next" />
+    <div className="relative group/slider my-6">
+      {/* Controls */}
+      <button
+        onClick={() => scroll("left")}
+        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-slate-900/90 border border-slate-700 text-white flex items-center justify-center shadow-lg opacity-80 hover:opacity-100 hover:scale-110 transition-all"
+        aria-label="Previous"
+      >
+        <i className="ri-arrow-left-s-line text-xl"></i>
+      </button>
+      <button
+        onClick={() => scroll("right")}
+        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-slate-900/90 border border-slate-700 text-white flex items-center justify-center shadow-lg opacity-80 hover:opacity-100 hover:scale-110 transition-all"
+        aria-label="Next"
+      >
+        <i className="ri-arrow-right-s-line text-xl"></i>
+      </button>
+
+      {/* Slider Track */}
+      <div
+        ref={scrollRef}
+        className="flex gap-5 overflow-x-auto scrollbar-none snap-x snap-mandatory py-2 px-1 scroll-smooth"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {posts.map((post) => (
+          <div
+            key={post.id}
+            className="flex-shrink-0 w-72 sm:w-80 snap-start"
+          >
+            <PostCard
+              post={post}
+              authors={authors}
+              categories={categories}
+              variant="floating"
+              titleTag="h5"
+            />
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

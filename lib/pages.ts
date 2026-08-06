@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import { readMainHtmlFile } from "@/lib/read-main-html";
 
 export type PageMeta = {
   slug: string;
@@ -11,13 +10,23 @@ export type PageMeta = {
 };
 
 const INDEX_PATH = path.join(process.cwd(), "content", "pages-index.json");
-const PAGES_DIR = path.join(process.cwd(), "content", "pages");
 
 let cached: PageMeta[] | null = null;
 
 function getIndex(): PageMeta[] {
   if (!cached) {
-    cached = JSON.parse(fs.readFileSync(INDEX_PATH, "utf8")) as PageMeta[];
+    if (fs.existsSync(INDEX_PATH)) {
+      cached = JSON.parse(fs.readFileSync(INDEX_PATH, "utf8")) as PageMeta[];
+    } else {
+      cached = [
+        { slug: "blog", title: "Blog - Technology News", bodyClass: "", cssHash: "", jsHash: "" },
+        { slug: "about-us", title: "About Us - Technology News", bodyClass: "", cssHash: "", jsHash: "" },
+        { slug: "contact", title: "Contact - Technology News", bodyClass: "", cssHash: "", jsHash: "" },
+        { slug: "login", title: "Login - Technology News", bodyClass: "", cssHash: "", jsHash: "" },
+        { slug: "register", title: "Register - Technology News", bodyClass: "", cssHash: "", jsHash: "" },
+        { slug: "search", title: "Search - Technology News", bodyClass: "", cssHash: "", jsHash: "" },
+      ];
+    }
   }
   return cached;
 }
@@ -26,16 +35,8 @@ export function getAllPages(): PageMeta[] {
   return getIndex();
 }
 
-export function getPage(slug: string): (PageMeta & { mainHtml: string }) | null {
+export function getPage(slug: string): PageMeta | null {
   const meta = getIndex().find((p) => p.slug === slug);
   if (!meta) return null;
-
-  const htmlPath = path.join(PAGES_DIR, `${slug}.html`);
-  const mainHtml = readMainHtmlFile(htmlPath);
-  if (!mainHtml) return null;
-
-  return {
-    ...meta,
-    mainHtml,
-  };
+  return meta;
 }

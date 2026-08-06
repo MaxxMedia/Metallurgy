@@ -1,8 +1,5 @@
-import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
-import { Preloader } from "@/components/layout/Preloader";
-import { ScrollToTop } from "@/components/layout/ScrollToTop";
-import { ShellClientEffects } from "@/components/layout/ShellClientEffects";
+import { Footer } from "@/components/layout/Footer";
 
 type SiteShellProps = {
   children: React.ReactNode;
@@ -10,17 +7,10 @@ type SiteShellProps = {
 
 export function SiteShell({ children }: SiteShellProps) {
   return (
-    <>
-      <Preloader />
-      <ScrollToTop />
-      <ShellClientEffects />
-      <div id="nerio-page" className="nerio-page-wrapper">
-        <Header />
-        <main id="nerio-content" className="nerio-content-wrapper">
-          {children}
-        </main>
-        <Footer />
-      </div>
-    </>
+    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-emerald-500 selection:text-slate-950 font-sans">
+      <Header />
+      <main className="flex-1 w-full">{children}</main>
+      <Footer />
+    </div>
   );
 }

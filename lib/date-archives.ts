@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import { readMainHtmlFile } from "@/lib/read-main-html";
 
 export type DateArchiveMeta = {
   key: string;
@@ -15,28 +14,24 @@ export type DateArchiveMeta = {
 };
 
 const INDEX_PATH = path.join(process.cwd(), "content", "date-archives-index.json");
-const ARCHIVES_DIR = path.join(process.cwd(), "content", "date-archives");
 
 let cached: DateArchiveMeta[] | null = null;
 
 function getIndex(): DateArchiveMeta[] {
   if (!cached) {
-    cached = JSON.parse(fs.readFileSync(INDEX_PATH, "utf8")) as DateArchiveMeta[];
+    if (fs.existsSync(INDEX_PATH)) {
+      cached = JSON.parse(fs.readFileSync(INDEX_PATH, "utf8")) as DateArchiveMeta[];
+    } else {
+      cached = [];
+    }
   }
   return cached;
-}
-
-function loadMainHtml(key: string): string | null {
-  const htmlPath = path.join(ARCHIVES_DIR, `${key}.html`);
-  return readMainHtmlFile(htmlPath);
 }
 
 export function getYearArchive(year: string) {
   const meta = getIndex().find((a) => a.kind === "year" && a.year === year);
   if (!meta) return null;
-  const mainHtml = loadMainHtml(meta.key);
-  if (!mainHtml) return null;
-  return { ...meta, mainHtml };
+  return meta;
 }
 
 export function getMonthArchive(year: string, month: string) {
@@ -44,9 +39,7 @@ export function getMonthArchive(year: string, month: string) {
     (a) => a.kind === "month" && a.year === year && a.month === month,
   );
   if (!meta) return null;
-  const mainHtml = loadMainHtml(meta.key);
-  if (!mainHtml) return null;
-  return { ...meta, mainHtml };
+  return meta;
 }
 
 export function getDayArchive(year: string, month: string, day: string) {
@@ -58,9 +51,7 @@ export function getDayArchive(year: string, month: string, day: string) {
       a.day === day,
   );
   if (!meta) return null;
-  const mainHtml = loadMainHtml(meta.key);
-  if (!mainHtml) return null;
-  return { ...meta, mainHtml };
+  return meta;
 }
 
 export function getAllMonthArchives() {
