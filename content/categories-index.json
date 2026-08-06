@@ -1,0 +1,65 @@
+[
+  {
+    "slug": "automation",
+    "title": "Automation &#8211; Technology News Dark",
+    "bodyClass": "archive category category-automation category-8 wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "7053e3a0fca1a59c2bf49ffa887c3cfa",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "slug": "digital",
+    "title": "Digital &#8211; Technology News Dark",
+    "bodyClass": "archive category category-digital category-4 wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "fa981b9305d94990dde292fcdfb557c3",
+    "jsHash": "e39ec1ccf737cac405f5328cc131aa99"
+  },
+  {
+    "slug": "future",
+    "title": "Future &#8211; Technology News Dark",
+    "bodyClass": "archive category category-future category-5 wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "c1647b11f5c661ccd431f760d7771263",
+    "jsHash": "e39ec1ccf737cac405f5328cc131aa99"
+  },
+  {
+    "slug": "gadget",
+    "title": "Gadget &#8211; Technology News Dark",
+    "bodyClass": "archive category category-gadget category-3 wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "2e9532784f7e0349ef8a58da0622ef23",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "slug": "innovation",
+    "title": "Innovation &#8211; Technology News Dark",
+    "bodyClass": "archive category category-innovation category-6 wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "7053e3a0fca1a59c2bf49ffa887c3cfa",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "slug": "robotics",
+    "title": "Robotics &#8211; Technology News Dark",
+    "bodyClass": "archive category category-robotics category-7 wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "7053e3a0fca1a59c2bf49ffa887c3cfa",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "slug": "software",
+    "title": "Software &#8211; Technology News Dark",
+    "bodyClass": "archive category category-software category-9 wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "7053e3a0fca1a59c2bf49ffa887c3cfa",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "slug": "tech",
+    "title": "Page not found &#8211; Technology News Dark",
+    "bodyClass": "error404 wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "9fb41a6955f60a13c24d41d057e0a5da",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "slug": "tech-2",
+    "title": "Tech &#8211; Technology News Dark",
+    "bodyClass": "archive category category-tech-2 category-2 wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "3a0efd134a3995256ed294f57d51afcd",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  }
+]

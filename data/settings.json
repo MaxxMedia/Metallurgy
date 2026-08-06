@@ -1,0 +1,45 @@
+{
+  "siteName": "Technology News Dark",
+  "tagline": "Technology News Dark",
+  "locale": "en-US",
+  "logo": "/wp-content/uploads/sites/32/2025/11/logo.png",
+  "logoMobile": "/wp-content/uploads/sites/32/2025/11/logo.png",
+  "favicon": "/wp-content/uploads/sites/32/2025/11/favicon02-150x150.png",
+  "preloaderImage": "/wp-content/themes/nerio/assets/img/preloader.png",
+  "loginUrl": "/login",
+  "searchUrl": "/search",
+  "weather": {
+    "location": "California",
+    "temperatureC": 28.3
+  },
+  "socialLinks": [
+    {
+      "id": "facebook",
+      "label": "Facebook",
+      "href": "#",
+      "network": "facebook"
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "href": "#",
+      "network": "instagram"
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "href": "#",
+      "network": "linkedin"
+    },
+    {
+      "id": "pinterest",
+      "label": "Pinterest",
+      "href": "#",
+      "network": "pinterest"
+    }
+  ],
+  "newsletter": {
+    "title": "Join Our Reader Community",
+    "description": "Get breaking news, updates, and exclusive stories delivered straight to your inbox."
+  }
+}

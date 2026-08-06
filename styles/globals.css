@@ -1,0 +1,13 @@
+/* Minimal Next shell — Nerio / Elementor CSS controls the UI */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Home contact promo (Elementor image 6925) — full-width banner */
+.elementor-element-008612d .elementor-widget-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

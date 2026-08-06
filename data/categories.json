@@ -1,0 +1,94 @@
+{
+  "categories": [
+    {
+      "id": 8,
+      "slug": "automation",
+      "name": "Automation",
+      "url": "/category/automation",
+      "postCount": 3,
+      "cssHash": "7053e3a0fca1a59c2bf49ffa887c3cfa",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc",
+      "color": "#00b5ed"
+    },
+    {
+      "id": 4,
+      "slug": "digital",
+      "name": "Digital",
+      "url": "/category/digital",
+      "postCount": 5,
+      "cssHash": "fa981b9305d94990dde292fcdfb557c3",
+      "jsHash": "e39ec1ccf737cac405f5328cc131aa99",
+      "color": "#0073ff"
+    },
+    {
+      "id": 5,
+      "slug": "future",
+      "name": "Future",
+      "url": "/category/future",
+      "postCount": 2,
+      "cssHash": "c1647b11f5c661ccd431f760d7771263",
+      "jsHash": "e39ec1ccf737cac405f5328cc131aa99",
+      "color": "#54bd05"
+    },
+    {
+      "id": 3,
+      "slug": "gadget",
+      "name": "Gadget",
+      "url": "/category/gadget",
+      "postCount": 4,
+      "cssHash": "2e9532784f7e0349ef8a58da0622ef23",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc",
+      "color": "#00ad48"
+    },
+    {
+      "id": 6,
+      "slug": "innovation",
+      "name": "Innovation",
+      "url": "/category/innovation",
+      "postCount": 5,
+      "cssHash": "7053e3a0fca1a59c2bf49ffa887c3cfa",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc",
+      "color": "#59a255"
+    },
+    {
+      "id": 7,
+      "slug": "robotics",
+      "name": "Robotics",
+      "url": "/category/robotics",
+      "postCount": 2,
+      "cssHash": "7053e3a0fca1a59c2bf49ffa887c3cfa",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc",
+      "color": "#8e44ad"
+    },
+    {
+      "id": 9,
+      "slug": "software",
+      "name": "Software",
+      "url": "/category/software",
+      "postCount": 5,
+      "cssHash": "7053e3a0fca1a59c2bf49ffa887c3cfa",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc",
+      "color": "#f27100"
+    },
+    {
+      "id": 0,
+      "slug": "tech",
+      "name": "Page not found",
+      "url": "/category/tech",
+      "postCount": 0,
+      "cssHash": "9fb41a6955f60a13c24d41d057e0a5da",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc",
+      "color": "#ff5733"
+    },
+    {
+      "id": 2,
+      "slug": "tech-2",
+      "name": "Tech",
+      "url": "/category/tech-2",
+      "postCount": 6,
+      "cssHash": "3a0efd134a3995256ed294f57d51afcd",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc",
+      "color": "#ff5733"
+    }
+  ]
+}

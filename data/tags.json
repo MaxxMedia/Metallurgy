@@ -1,0 +1,116 @@
+{
+  "tags": [
+    {
+      "id": 10,
+      "slug": "beauty",
+      "name": "Beauty",
+      "url": "/tag/beauty",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 11,
+      "slug": "branding",
+      "name": "Branding",
+      "url": "/tag/branding",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 12,
+      "slug": "business",
+      "name": "Business",
+      "url": "/tag/business",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 13,
+      "slug": "food",
+      "name": "Food",
+      "url": "/tag/food",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 14,
+      "slug": "gaming",
+      "name": "Gaming",
+      "url": "/tag/gaming",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 15,
+      "slug": "makeup",
+      "name": "Makeup",
+      "url": "/tag/makeup",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 16,
+      "slug": "marketing",
+      "name": "Marketing",
+      "url": "/tag/marketing",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 17,
+      "slug": "politics",
+      "name": "Politics",
+      "url": "/tag/politics",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 18,
+      "slug": "printing",
+      "name": "Printing",
+      "url": "/tag/printing",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 19,
+      "slug": "social",
+      "name": "Social",
+      "url": "/tag/social",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 20,
+      "slug": "sports",
+      "name": "Sports",
+      "url": "/tag/sports",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 21,
+      "slug": "technology",
+      "name": "Technology",
+      "url": "/tag/technology",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 22,
+      "slug": "travel",
+      "name": "Travel",
+      "url": "/tag/travel",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    },
+    {
+      "id": 23,
+      "slug": "trip",
+      "name": "Trip",
+      "url": "/tag/trip",
+      "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+      "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+    }
+  ]
+}

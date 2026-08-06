@@ -1,0 +1,48 @@
+import fs from "fs";
+import path from "path";
+
+export type PostMeta = {
+  slug: string;
+  year: string;
+  month: string;
+  day: string;
+  title: string;
+  bodyClass: string;
+  cssHash: string;
+  jsHash: string;
+};
+
+const INDEX_PATH = path.join(process.cwd(), "content", "posts-index.json");
+const POSTS_DIR = path.join(process.cwd(), "content", "posts");
+
+let cachedIndex: PostMeta[] | null = null;
+
+export function getAllPosts(): PostMeta[] {
+  if (!cachedIndex) {
+    cachedIndex = JSON.parse(fs.readFileSync(INDEX_PATH, "utf8")) as PostMeta[];
+  }
+  return cachedIndex;
+}
+
+export function getPost(
+  month: string,
+  day: string,
+  slug: string,
+): (PostMeta & { mainHtml: string }) | null {
+  const meta = getAllPosts().find(
+    (p) => p.month === month && p.day === day && p.slug === slug,
+  );
+  if (!meta) return null;
+
+  const htmlPath = path.join(POSTS_DIR, `${slug}.html`);
+  if (!fs.existsSync(htmlPath)) return null;
+
+  return {
+    ...meta,
+    mainHtml: fs.readFileSync(htmlPath, "utf8"),
+  };
+}
+
+export function postPath(meta: Pick<PostMeta, "year" | "month" | "day" | "slug">) {
+  return `/${meta.year}/${meta.month}/${meta.day}/${meta.slug}`;
+}

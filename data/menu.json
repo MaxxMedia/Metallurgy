@@ -1,0 +1,308 @@
+{
+  "primary": [
+    {
+      "id": "5727",
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "id": "4844",
+      "label": "Features",
+      "href": "/#"
+    },
+    {
+      "id": "5048",
+      "label": "Technology",
+      "href": "/#"
+    },
+    {
+      "id": "4646",
+      "label": "Pages",
+      "href": "/#"
+    },
+    {
+      "id": "4655",
+      "label": "About Us",
+      "href": "/about-us"
+    },
+    {
+      "id": "6548",
+      "label": "Author",
+      "href": "/author/istiak"
+    },
+    {
+      "id": "6549",
+      "label": "Category Layouts",
+      "href": "/#"
+    },
+    {
+      "id": "6551",
+      "label": "Category Layouts 01",
+      "href": "/category/automation"
+    },
+    {
+      "id": "6552",
+      "label": "Category Layouts 02",
+      "href": "/category/digital"
+    },
+    {
+      "id": "6553",
+      "label": "Category Layouts 03",
+      "href": "/category/future"
+    },
+    {
+      "id": "6554",
+      "label": "Category Layouts 04",
+      "href": "/category/gadget"
+    },
+    {
+      "id": "6805",
+      "label": "Category Layouts 05",
+      "href": "/category/tech-2"
+    },
+    {
+      "id": "6550",
+      "label": "Post Layout",
+      "href": "/#"
+    },
+    {
+      "id": "6555",
+      "label": "Post Layout 01",
+      "href": "/2025/10/02/adventure-awaits-thrilling-the-activities-around-world"
+    },
+    {
+      "id": "6556",
+      "label": "Post Layout 02",
+      "href": "/2025/11/10/ai-vs-machine-learning-vs-deep-learning-whats-the-fraud-detection-and-difference"
+    },
+    {
+      "id": "6557",
+      "label": "Post Layout 03",
+      "href": "/2025/11/04/artificial-intelligence-tools-are-becoming-essential"
+    },
+    {
+      "id": "6558",
+      "label": "Post Layout 04",
+      "href": "/2025/10/02/cloud-computing-services-report-rapid-growth"
+    },
+    {
+      "id": "6559",
+      "label": "Post Layout 05",
+      "href": "/2025/10/02/consumer-electronics-companies-focus-on-lightweight"
+    },
+    {
+      "id": "6834",
+      "label": "Post Layout 06",
+      "href": "/2025/11/04/why-everyones-talking-about-homemade-sauces-right-now"
+    },
+    {
+      "id": "4637",
+      "label": "Contact",
+      "href": "/contact"
+    },
+    {
+      "id": "6560",
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "id": "6561",
+      "label": "About Us",
+      "href": "/about-us"
+    },
+    {
+      "id": "6562",
+      "label": "Author",
+      "href": "/author/istiak"
+    },
+    {
+      "id": "6563",
+      "label": "Pages",
+      "href": "/#"
+    },
+    {
+      "id": "6565",
+      "label": "Category Layout",
+      "href": "/#"
+    },
+    {
+      "id": "6572",
+      "label": "Category Layout 01",
+      "href": "/category/automation"
+    },
+    {
+      "id": "6573",
+      "label": "Category Layout 02",
+      "href": "/category/digital"
+    },
+    {
+      "id": "6574",
+      "label": "Category Layout 03",
+      "href": "/category/future"
+    },
+    {
+      "id": "6575",
+      "label": "Category Layout 04",
+      "href": "/category/gadget"
+    },
+    {
+      "id": "6566",
+      "label": "Post Layout",
+      "href": "/#"
+    },
+    {
+      "id": "6567",
+      "label": "Post Layout 01",
+      "href": "/2025/10/02/adventure-awaits-thrilling-the-activities-around-world"
+    },
+    {
+      "id": "6568",
+      "label": "Post Layout 02",
+      "href": "/2025/11/10/ai-vs-machine-learning-vs-deep-learning-whats-the-fraud-detection-and-difference"
+    },
+    {
+      "id": "6569",
+      "label": "Post Layout 03",
+      "href": "/2025/11/04/artificial-intelligence-tools-are-becoming-essential"
+    },
+    {
+      "id": "6570",
+      "label": "Post Layout 04",
+      "href": "/2025/10/02/cloud-computing-services-report-rapid-growth"
+    },
+    {
+      "id": "6571",
+      "label": "Post Layout 05",
+      "href": "/2025/10/02/consumer-electronics-companies-focus-on-lightweight"
+    },
+    {
+      "id": "6564",
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "mobile": [
+    {
+      "id": "6560",
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "id": "6561",
+      "label": "About Us",
+      "href": "/about-us"
+    },
+    {
+      "id": "6562",
+      "label": "Author",
+      "href": "/author/istiak"
+    },
+    {
+      "id": "6563",
+      "label": "Pages",
+      "href": "/#"
+    },
+    {
+      "id": "6565",
+      "label": "Category Layout",
+      "href": "/#"
+    },
+    {
+      "id": "6572",
+      "label": "Category Layout 01",
+      "href": "/category/automation"
+    },
+    {
+      "id": "6573",
+      "label": "Category Layout 02",
+      "href": "/category/digital"
+    },
+    {
+      "id": "6574",
+      "label": "Category Layout 03",
+      "href": "/category/future"
+    },
+    {
+      "id": "6575",
+      "label": "Category Layout 04",
+      "href": "/category/gadget"
+    },
+    {
+      "id": "6566",
+      "label": "Post Layout",
+      "href": "/#"
+    },
+    {
+      "id": "6567",
+      "label": "Post Layout 01",
+      "href": "/2025/10/02/adventure-awaits-thrilling-the-activities-around-world"
+    },
+    {
+      "id": "6568",
+      "label": "Post Layout 02",
+      "href": "/2025/11/10/ai-vs-machine-learning-vs-deep-learning-whats-the-fraud-detection-and-difference"
+    },
+    {
+      "id": "6569",
+      "label": "Post Layout 03",
+      "href": "/2025/11/04/artificial-intelligence-tools-are-becoming-essential"
+    },
+    {
+      "id": "6570",
+      "label": "Post Layout 04",
+      "href": "/2025/10/02/cloud-computing-services-report-rapid-growth"
+    },
+    {
+      "id": "6571",
+      "label": "Post Layout 05",
+      "href": "/2025/10/02/consumer-electronics-companies-focus-on-lightweight"
+    },
+    {
+      "id": "6564",
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "footerCategories": [
+    {
+      "id": "5117",
+      "label": "Tech",
+      "href": "/category/tech-2"
+    },
+    {
+      "id": "5114",
+      "label": "Innovation",
+      "href": "/category/innovation"
+    },
+    {
+      "id": "5118",
+      "label": "Robotics",
+      "href": "/category/robotics"
+    },
+    {
+      "id": "5116",
+      "label": "Software",
+      "href": "/category/software"
+    },
+    {
+      "id": "5119",
+      "label": "Gadget",
+      "href": "/category/gadget"
+    },
+    {
+      "id": "5115",
+      "label": "Automation",
+      "href": "/category/automation"
+    },
+    {
+      "id": "5113",
+      "label": "Digital",
+      "href": "/category/digital"
+    },
+    {
+      "id": "5120",
+      "label": "Future",
+      "href": "/category/future"
+    }
+  ]
+}

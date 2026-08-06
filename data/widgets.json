@@ -1,0 +1,34 @@
+{
+  "sidebar": [
+    {
+      "id": "popular-news",
+      "type": "popular",
+      "title": "Popular News",
+      "postIds": [
+        2168,
+        2217,
+        5062,
+        5091,
+        1922
+      ]
+    },
+    {
+      "id": "top-categories",
+      "type": "categories",
+      "title": "Top Categories",
+      "categorySlugs": [
+        "automation",
+        "digital",
+        "future",
+        "gadget",
+        "innovation",
+        "robotics"
+      ]
+    },
+    {
+      "id": "follow-us",
+      "type": "social",
+      "title": "Follow Us"
+    }
+  ]
+}

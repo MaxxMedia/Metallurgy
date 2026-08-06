@@ -1,0 +1,68 @@
+[
+  {
+    "key": "2025",
+    "kind": "year",
+    "year": "2025",
+    "month": null,
+    "day": null,
+    "title": "2025 &#8211; Technology News Dark",
+    "bodyClass": "archive date wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "key": "2025-10",
+    "kind": "month",
+    "year": "2025",
+    "month": "10",
+    "day": null,
+    "title": "October 2025 &#8211; Technology News Dark",
+    "bodyClass": "archive date wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "key": "2025-10-02",
+    "kind": "day",
+    "year": "2025",
+    "month": "10",
+    "day": "02",
+    "title": "October 2, 2025 &#8211; Technology News Dark",
+    "bodyClass": "archive date wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "key": "2025-11",
+    "kind": "month",
+    "year": "2025",
+    "month": "11",
+    "day": null,
+    "title": "November 2025 &#8211; Technology News Dark",
+    "bodyClass": "archive date wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "key": "2025-11-04",
+    "kind": "day",
+    "year": "2025",
+    "month": "11",
+    "day": "04",
+    "title": "November 4, 2025 &#8211; Technology News Dark",
+    "bodyClass": "archive date wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  },
+  {
+    "key": "2025-11-10",
+    "kind": "day",
+    "year": "2025",
+    "month": "11",
+    "day": "10",
+    "title": "November 10, 2025 &#8211; Technology News Dark",
+    "bodyClass": "archive date wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+    "cssHash": "3fd97b5895d425cb30e9cdb60d4e22de",
+    "jsHash": "835be14e8b2b7249773f157bfb1c02dc"
+  }
+]
