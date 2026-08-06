@@ -3,5 +3,5 @@ import { LegacyHtml } from "@/components/LegacyHtml";
 
 export function Header() {
   const html = readExtractedHtml("header");
-  return <LegacyHtml html={html} displayContents />;
+  return <LegacyHtml html={html} className="nerio-legacy-header" />;
 }
