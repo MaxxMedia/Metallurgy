@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { Author, Category, Post } from "@/types/data";
 import { formatPostDate, postThumbnail } from "@/lib/post-utils";
-import { CategoryBadge } from "@/components/fpg/CategoryBadge";
-import { PostMeta } from "@/components/fpg/PostMeta";
+import { CategoryBadge } from "@/components/ui/CategoryBadge";
+import { PostMeta } from "@/components/ui/PostMeta";
 
 type PostArticleViewProps = {
   post: Post;

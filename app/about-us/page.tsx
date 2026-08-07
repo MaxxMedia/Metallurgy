@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { StaticPageView } from "@/components/pages/StaticPageView";
 import { ContentThemeLayout } from "@/components/layout/ContentThemeLayout";
+import { PageContainer } from "@/components/ui/PageContainer";
 import { loadPagesFile } from "@/lib/data-store";
 import { reactNotFoundMetadata, reactPageMetadata } from "@/lib/content/react/metadata";
 
@@ -19,13 +20,13 @@ export default function AboutUsPage() {
 
   return (
     <ContentThemeLayout bodyClass={page.bodyClass ?? ""}>
-      <div className="mx-auto w-full max-w-6xl px-2.5 py-6">
+      <PageContainer>
         <StaticPageView
           title={page.title}
           description={page.description}
           bodyHtml={page.bodyHtml}
         />
-      </div>
+      </PageContainer>
     </ContentThemeLayout>
   );
 }

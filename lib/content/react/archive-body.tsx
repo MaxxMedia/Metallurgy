@@ -1,7 +1,9 @@
 import { ElementorHtmlBody } from "@/components/content/ElementorHtmlBody";
 import { CategoryArchiveView } from "@/components/archive/CategoryArchiveView";
+import { CategoryArchivePageView } from "@/components/archive/CategoryArchivePageView";
 import { TagArchiveView } from "@/components/archive/TagArchiveView";
 import { AuthorArchiveView } from "@/components/archive/AuthorArchiveView";
+import { hasArchiveLayout } from "@/lib/content/archive-html-split";
 import type { Author, Category, Post } from "@/types/data";
 
 type ArchiveGridFallback = {
@@ -34,8 +36,20 @@ export function ArchiveBodyOrGrid(
     | ({ bodyHtml?: string } & TagGridFallback)
     | ({ bodyHtml?: string } & AuthorGridFallback),
 ) {
+  if (props.kind === "category" && props.bodyHtml?.trim() && hasArchiveLayout(props.bodyHtml)) {
+    return (
+      <CategoryArchivePageView
+        bodyHtml={props.bodyHtml}
+        title={props.title}
+        posts={props.posts}
+        authors={props.authors}
+        categories={props.categories}
+      />
+    );
+  }
+
   if (props.bodyHtml?.trim()) {
-    return <ElementorHtmlBody html={props.bodyHtml} />;
+    return <ElementorHtmlBody html={props.bodyHtml} className="w-full max-w-full" />;
   }
 
   if (props.kind === "category") {

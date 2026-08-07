@@ -1,5 +1,5 @@
 import { ThemeLayout } from "@/components/layout/ThemeLayout";
-import { getArchivePageAssets, getSinglePostAssets } from "@/lib/page-assets";
+import { getArchivePageAssets } from "@/lib/page-assets";
 
 type ContentThemeLayoutProps = {
   children: React.ReactNode;
@@ -14,10 +14,7 @@ export function ContentThemeLayout({
   cssHash,
   jsHash,
 }: ContentThemeLayoutProps) {
-  const assets =
-    cssHash && jsHash
-      ? getSinglePostAssets(cssHash, jsHash)
-      : getArchivePageAssets(bodyClass);
+  const assets = getArchivePageAssets(bodyClass, cssHash, jsHash);
 
   return (
     <ThemeLayout

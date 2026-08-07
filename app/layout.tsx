@@ -44,6 +44,11 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css"
         />
         <link rel="stylesheet" href={cssHref} />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `.elementor-302 .elementor-element.elementor-element-db9a700:not(.elementor-motion-effects-element-type-background){background-image:url("/wp-content/uploads/sites/32/2025/11/nerio_adds-1.jpg")!important;background-size:cover!important;background-position:top center!important;background-repeat:no-repeat!important;}`,
+          }}
+        />
       </head>
       <body className="m-0 w-full overflow-x-hidden bg-black p-0 font-[family-name:var(--bodyFont,'Inter_Tight',sans-serif)] text-[#ffffffe6] antialiased [color-scheme:dark]">
         <SiteShell>{children}</SiteShell>

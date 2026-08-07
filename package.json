@@ -2,6 +2,21 @@
   "name": "nerio-next",
   "version": "0.1.0",
   "private": true,
+  "description": "Next.js 15 port of the static Nerio WordPress mirror in `../technology-news-dark`.",
+  "homepage": "https://github.com/MaxxMedia/Metallurgy#readme",
+  "bugs": {
+    "url": "https://github.com/MaxxMedia/Metallurgy/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxxMedia/Metallurgy.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "dev:webpack": "next dev",
@@ -10,7 +25,7 @@
     "lint": "eslint",
     "extract": "node scripts/extract-html-parts.mjs",
     "assets:sync": "node scripts/sync-uploads.mjs",
-    "home:images": "node scripts/fix-home-images.mjs && node scripts/materialize-upload-variants.mjs && node scripts/materialize-post-thumbnails.mjs",
+    "home:images": "node scripts/fix-home-images.mjs && node scripts/materialize-newsletter-assets.mjs && node scripts/materialize-upload-variants.mjs && node scripts/materialize-post-thumbnails.mjs",
     "uploads:materialize": "node scripts/materialize-upload-urls.mjs",
     "content:index": "npm run extract && npm run data:build",
     "data:build": "node scripts/build-data.mjs"
@@ -19,6 +34,7 @@
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/typography": "^0.5.20",
     "next": "15.5.22",
+    "postcss": "^8.5.26",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "tailwindcss": "^4.3.3"

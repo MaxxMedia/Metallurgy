@@ -1,1 +1,56 @@
 @import "tailwindcss";
+
+/* Preloader center mark — same pulse as theme `.loader-icon img` */
+.nerio-preloader .loader-container .loader-icon .preloader-mark {
+  animation: loader-pulse 900ms infinite alternate;
+}
+
+/* `db9a700`: background is nerio_adds-1.jpg (theme classic), not a flat color fill */
+.elementor-302 .elementor-element.elementor-element-db9a700:not(.elementor-motion-effects-element-type-background),
+.elementor-302
+  .elementor-element.elementor-element-db9a700
+  > .elementor-motion-effects-container
+  > .elementor-motion-effects-layer {
+  background-image: url("/wp-content/uploads/sites/32/2025/11/nerio_adds-1.jpg") !important;
+  background-position: top center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+.elementor-302 .elementor-element.elementor-element-db9a700 {
+  --overflow: hidden;
+  border-radius: 8px;
+  min-height: 360px;
+  display: flex !important;
+}
+.elementor-302 .elementor-element.elementor-element-db9a700 > .elementor-element.elementor-absolute {
+  position: absolute !important;
+  width: auto !important;
+  max-width: none !important;
+  height: auto !important;
+}
+.elementor-302 .elementor-element.elementor-element-db9a700 > .elementor-element.elementor-absolute .rs-image,
+.elementor-302 .elementor-element.elementor-element-db9a700 > .elementor-element.elementor-absolute .elementor-widget-container {
+  width: auto !important;
+  height: auto !important;
+}
+.elementor-302 .elementor-element.elementor-element-db9a700 > .elementor-element.elementor-absolute .rs-image img {
+  width: auto;
+  max-width: none;
+  height: auto;
+}
+.elementor-302 .elementor-element.elementor-element-db9a700 > .elementor-element.elementor-element-d8aaed0 .rs-image img {
+  width: auto;
+  max-width: 120px;
+}
+.elementor-302 .elementor-element.elementor-element-db9a700 > .elementor-element.elementor-element-ac8d978 {
+  flex: 0 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+@media (min-width: 1024px) {
+  .elementor-302 .elementor-element.elementor-element-db9a700 > .elementor-element.elementor-element-ac8d978 {
+    width: 43%;
+    max-width: 43%;
+  }
+}

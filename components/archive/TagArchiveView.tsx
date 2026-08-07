@@ -1,6 +1,7 @@
 import type { Author, Category, Post } from "@/types/data";
-import { PostCard } from "@/components/fpg/PostCard";
-import { SectionHeading } from "@/components/fpg/SectionHeading";
+import { PostCard } from "@/components/ui/PostCard";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PostGrid } from "@/components/ui/PostGrid";
 
 type TagArchiveViewProps = {
   title: string;
@@ -18,21 +19,19 @@ export function TagArchiveView({
   return (
     <div className="elementor elementor-archive">
       <SectionHeading title={title} />
-      <div className="fpg-post-parent">
-        <div className="fpg-post-grid">
-          {posts.map((post) => (
-            <PostCard
-              key={post.id}
-              post={post}
-              authors={authors}
-              categories={categories}
-              variant="three"
-              titleTag="h4"
-              showExcerpt
-            />
-          ))}
-        </div>
-      </div>
+      <PostGrid>
+        {posts.map((post) => (
+          <PostCard
+            key={post.id}
+            post={post}
+            authors={authors}
+            categories={categories}
+            variant="three"
+            titleTag="h4"
+            showExcerpt
+          />
+        ))}
+      </PostGrid>
     </div>
   );
 }
