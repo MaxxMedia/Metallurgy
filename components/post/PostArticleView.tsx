@@ -31,11 +31,17 @@ export function PostArticleView({ post, author, category }: PostArticleViewProps
       <div className="fpg-post-thumb post-thumbnail">
         <img src={thumb} alt="" className="attachment-large size-large wp-post-image" />
       </div>
-      <div className="entry-content fpg-post-content">
-        <p>{post.excerpt}</p>
-        <p>
-          <Link href={`/category/${catSlug}`}>More in {catName}</Link>
-        </p>
+      <div className="entry-content fpg-post-content rstb-post-content">
+        {post.bodyHtml ? (
+          <div dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
+        ) : (
+          <>
+            <p>{post.excerpt}</p>
+            <p>
+              <Link href={`/category/${catSlug}`}>More in {catName}</Link>
+            </p>
+          </>
+        )}
       </div>
       <footer className="entry-footer">
         <time dateTime={post.dateISO}>{formatPostDate(post.dateISO)}</time>

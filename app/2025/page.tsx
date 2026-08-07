@@ -1,21 +1,6 @@
-import type { Metadata } from "next";
-import {
-  loadYearArchivePage,
-  mirrorNotFoundMetadata,
-  mirrorPageMetadata,
-  MirrorPageView,
-  mirrorPageOrNotFound,
-} from "@/lib/content";
+import { createYearArchiveReactPage } from "@/lib/content/react/create-date-archive-page";
 
-const YEAR = "2025";
+const { Page, generateMetadata } = createYearArchiveReactPage();
 
-export function generateMetadata(): Metadata {
-  const page = loadYearArchivePage(YEAR);
-  if (!page) return mirrorNotFoundMetadata();
-  return mirrorPageMetadata(page.title);
-}
-
-export default function YearArchivePage() {
-  const page = mirrorPageOrNotFound(loadYearArchivePage(YEAR));
-  return <MirrorPageView page={page} />;
-}
+export { generateMetadata };
+export default Page;

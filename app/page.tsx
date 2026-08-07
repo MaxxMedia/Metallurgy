@@ -42,7 +42,8 @@ export default async function HomePage() {
       jsHash={assets.jsHash}
       inlineScripts={inlineScripts}
     >
-      <HomePageView
+      <div className="w-full max-w-full px-4 sm:px-6 lg:px-10 xl:px-[40px]">
+        <HomePageView
         sections={sections}
         posts={posts}
         authors={authors}
@@ -50,7 +51,8 @@ export default async function HomePage() {
         loadMoreIds={loadMoreIds}
         loadMoreInitial={loadMoreInitial}
         perClick={homeConfig.loadMore.perClick}
-      />
+        />
+      </div>
     </ThemeLayout>
   );
 }

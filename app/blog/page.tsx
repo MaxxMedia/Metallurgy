@@ -1,6 +1,6 @@
-import { createStaticMirrorPage } from "@/lib/content/static-mirror-page";
+import { createStaticReactPage } from "@/lib/content/react/create-static-react-page";
 
-const { Page, generateMetadata } = createStaticMirrorPage("blog");
+const { Page, generateMetadata } = createStaticReactPage("blog");
 
 export { generateMetadata };
 export default Page;

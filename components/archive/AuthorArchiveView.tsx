@@ -2,24 +2,24 @@ import type { Author, Category, Post } from "@/types/data";
 import { PostCard } from "@/components/fpg/PostCard";
 import { SectionHeading } from "@/components/fpg/SectionHeading";
 
-type CategoryArchiveViewProps = {
-  title: string;
+type AuthorArchiveViewProps = {
+  author: Author;
   posts: Post[];
   authors: Author[];
   categories: Category[];
 };
 
-export function CategoryArchiveView({
-  title,
+export function AuthorArchiveView({
+  author,
   posts,
   authors,
   categories,
-}: CategoryArchiveViewProps) {
+}: AuthorArchiveViewProps) {
   return (
     <div className="elementor elementor-archive">
-      <SectionHeading title={title} />
-      <div className="fpg-post-parent w-full">
-        <div className="fpg-post-grid grid gap-[30px] sm:grid-cols-2 lg:grid-cols-3">
+      <SectionHeading title={author.name} />
+      <div className="fpg-post-parent">
+        <div className="fpg-post-grid">
           {posts.map((post) => (
             <PostCard
               key={post.id}

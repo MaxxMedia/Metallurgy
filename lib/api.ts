@@ -9,6 +9,7 @@ import type {
   Tag,
   TrendingContent,
   SidebarWidget,
+  StaticPage,
 } from "@/types/data";
 import {
   loadAdvertisementsFile,
@@ -109,4 +110,11 @@ export async function getSettings(): Promise<SiteSettings> {
 
 export async function getSidebarWidgets(): Promise<SidebarWidget[]> {
   return loadWidgetsFile().sidebar;
+}
+
+export async function getStaticPage(
+  slug: StaticPage["slug"],
+): Promise<StaticPage | undefined> {
+  const { loadPagesFile } = await import("@/lib/data-store");
+  return loadPagesFile().pages.find((p) => p.slug === slug);
 }

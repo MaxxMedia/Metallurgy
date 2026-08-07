@@ -1,7 +1,9 @@
 import fs from "fs";
 import path from "path";
 
-const html = fs.readFileSync("content/extracted/home-main.html", "utf8");
+const shellPath = path.resolve("data/shell.json");
+const shell = JSON.parse(fs.readFileSync(shellPath, "utf8"));
+const html = shell.homeMainHtml ?? "";
 const re = /\/wp-content\/uploads\/[^\s"'>)]+/g;
 const urls = [...new Set(html.match(re) ?? [])];
 const pub = path.resolve("public");
