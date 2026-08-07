@@ -73,8 +73,7 @@ export function PostSlider({ posts, authors, categories }: PostSliderProps) {
                       categories={categories}
                       variant="floating"
                       titleTag="h5"
-                      className="w-full"
-                      style={{ height: 520 }}
+                      className="w-full h-[520px]"
                     />
                   </div>
                 ))}
