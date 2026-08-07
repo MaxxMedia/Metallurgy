@@ -3,11 +3,19 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { fixBrokenAuthorLinks } from "./lib/rewrite-html.mjs";
 
-const dir = path.join(path.dirname(fileURLToPath(import.meta.url)), "../content/extracted");
-for (const name of fs.readdirSync(dir)) {
-  if (!name.endsWith(".html")) continue;
-  const filePath = path.join(dir, name);
-  const raw = fs.readFileSync(filePath, "utf8");
-  const next = fixBrokenAuthorLinks(raw);
-  if (next !== raw) fs.writeFileSync(filePath, next);
+const shellPath = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../data/shell.json",
+);
+const shell = JSON.parse(fs.readFileSync(shellPath, "utf8"));
+const keys = ["headerHtml", "footerHtml", "bodyTailHtml", "homeMainHtml"];
+let changed = false;
+for (const key of keys) {
+  if (typeof shell[key] !== "string") continue;
+  const next = fixBrokenAuthorLinks(shell[key]);
+  if (next !== shell[key]) {
+    shell[key] = next;
+    changed = true;
+  }
 }
+if (changed) fs.writeFileSync(shellPath, `${JSON.stringify(shell, null, 2)}\n`, "utf8");

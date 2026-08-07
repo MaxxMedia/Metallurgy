@@ -1,10 +1,7 @@
 /**
  * Content layer
  *
- * - `data/*.json` — structured CMS data (posts, categories, home sections).
- * - content HTML under content/ — Elementor main-column exports (mirror parity).
- * - Home (`/`) — React `HomePageView` (target pattern for other templates).
- * - Other routes — `MirrorMainPage` until each template is rebuilt in React.
+ * - `data/*.json` — all route + shell markup (run `npm run extract` + `npm run data:build`).
  */
 
 export type { MirrorPagePayload, StaticPageSlug } from "@/lib/content/types";

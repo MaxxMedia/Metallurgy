@@ -5,7 +5,7 @@
 export type ContentRenderMode = "mirror-html" | "react";
 
 export function getContentRenderMode(): ContentRenderMode {
-  return process.env.NEXT_PUBLIC_CONTENT_RENDER_MODE === "react"
-    ? "react"
-    : "mirror-html";
+  return process.env.NEXT_PUBLIC_CONTENT_RENDER_MODE === "mirror-html"
+    ? "mirror-html"
+    : "react";
 }

@@ -8,19 +8,10 @@ import {
 
 const ROOT = path.resolve(".");
 const PUBLIC_UPLOADS = path.join(ROOT, "public/wp-content/uploads");
-const MIRROR_INDEX = path.resolve("../technology-news-dark/index.html");
+const MIRROR = path.resolve("../technology-news-dark");
+const DATA_DIR = path.join(ROOT, "data");
 const FALLBACK_REL = FALLBACK_UPLOAD_IMAGE.replace(/^\/wp-content\/uploads\//, "");
 const FALLBACK_ABS = path.join(PUBLIC_UPLOADS, FALLBACK_REL);
-
-const HTML_DIRS = [
-  path.join(ROOT, "content/extracted"),
-  path.join(ROOT, "content/posts"),
-  path.join(ROOT, "content/categories"),
-  path.join(ROOT, "content/tags"),
-  path.join(ROOT, "content/pages"),
-  path.join(ROOT, "content/authors"),
-  path.join(ROOT, "content/date-archives"),
-];
 
 const UPLOAD_URL_RE =
   /(?:\/wp-content\/uploads\/|wp-content\/uploads\/)[^\s"'<>)]+\.(?:jpg|jpeg|png|webp|gif)/gi;
@@ -34,19 +25,31 @@ function normalizeUploadUrl(raw) {
   return url;
 }
 
-function collectUrlsFromMirrorIndex() {
-  if (!fs.existsSync(MIRROR_INDEX)) return [];
-  const raw = fs.readFileSync(MIRROR_INDEX, "utf8");
-  const matches = raw.match(UPLOAD_URL_RE) ?? [];
-  return matches.map(normalizeUploadUrl);
+function collectUrlsFromWpJson() {
+  const wpRoot = path.join(MIRROR, "wp-json", "wp", "v2");
+  const urls = [];
+  function walk(dir) {
+    if (!fs.existsSync(dir)) return;
+    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, ent.name);
+      if (ent.isDirectory()) walk(full);
+      else if (ent.name.endsWith(".json")) {
+        const raw = fs.readFileSync(full, "utf8");
+        const matches = raw.match(UPLOAD_URL_RE) ?? [];
+        urls.push(...matches.map(normalizeUploadUrl));
+      }
+    }
+  }
+  walk(wpRoot);
+  return urls;
 }
 
-function collectHtmlFiles(dir) {
-  if (!fs.existsSync(dir)) return [];
+function collectDataJsonFiles() {
+  if (!fs.existsSync(DATA_DIR)) return [];
   return fs
-    .readdirSync(dir)
-    .filter((f) => f.endsWith(".html"))
-    .map((f) => path.join(dir, f));
+    .readdirSync(DATA_DIR)
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => path.join(DATA_DIR, f));
 }
 
 function copyFileEnsured(fromAbs, toAbs) {
@@ -75,7 +78,7 @@ function materializeUrl(urlPath) {
 let created = 0;
 const seen = new Set();
 
-for (const url of collectUrlsFromMirrorIndex()) {
+for (const url of collectUrlsFromWpJson()) {
   if (seen.has(url)) continue;
   seen.add(url);
   const rel = url.replace(/^\/wp-content\/uploads\//, "");
@@ -85,26 +88,25 @@ for (const url of collectUrlsFromMirrorIndex()) {
   if (!before && after) created += 1;
 }
 
-for (const dir of HTML_DIRS) {
-  for (const file of collectHtmlFiles(dir)) {
-    let html = fs.readFileSync(file, "utf8");
-    const next = fixUploadImageUrls(html, PUBLIC_UPLOADS);
-    if (next !== html) {
-      fs.writeFileSync(file, next, "utf8");
-    }
-    const urls = next.match(UPLOAD_URL_RE) ?? [];
-    for (const url of urls) {
-      if (seen.has(url)) continue;
-      seen.add(url);
-      const before = fs.existsSync(
-        path.join(PUBLIC_UPLOADS, url.replace(/^\/wp-content\/uploads\//, "")),
-      );
-      materializeUrl(url);
-      const after = fs.existsSync(
-        path.join(PUBLIC_UPLOADS, url.replace(/^\/wp-content\/uploads\//, "")),
-      );
-      if (!before && after) created += 1;
-    }
+for (const file of collectDataJsonFiles()) {
+  let raw = fs.readFileSync(file, "utf8");
+  const next = fixUploadImageUrls(raw, PUBLIC_UPLOADS);
+  if (next !== raw) {
+    fs.writeFileSync(file, next, "utf8");
+    raw = next;
+  }
+  const urls = raw.match(UPLOAD_URL_RE) ?? [];
+  for (const url of urls) {
+    if (seen.has(url)) continue;
+    seen.add(url);
+    const before = fs.existsSync(
+      path.join(PUBLIC_UPLOADS, url.replace(/^\/wp-content\/uploads\//, "")),
+    );
+    materializeUrl(url);
+    const after = fs.existsSync(
+      path.join(PUBLIC_UPLOADS, url.replace(/^\/wp-content\/uploads\//, "")),
+    );
+    if (!before && after) created += 1;
   }
 }
 

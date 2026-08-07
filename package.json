@@ -9,30 +9,27 @@
     "start": "next start",
     "lint": "eslint",
     "extract": "node scripts/extract-html-parts.mjs",
-    "posts:index": "node scripts/build-post-index.mjs",
-    "categories:index": "node scripts/build-category-index.mjs",
-    "tags:index": "node scripts/build-tag-index.mjs",
-    "pages:index": "node scripts/build-pages-index.mjs",
-    "authors:index": "node scripts/build-author-index.mjs",
-    "archives:index": "node scripts/build-date-archive-index.mjs",
     "assets:sync": "node scripts/sync-uploads.mjs",
     "home:images": "node scripts/fix-home-images.mjs && node scripts/materialize-upload-variants.mjs && node scripts/materialize-post-thumbnails.mjs",
     "uploads:materialize": "node scripts/materialize-upload-urls.mjs",
-    "content:index": "npm run extract && npm run posts:index && npm run categories:index && npm run tags:index && npm run pages:index && npm run authors:index && npm run archives:index",
+    "content:index": "npm run extract && npm run data:build",
     "data:build": "node scripts/build-data.mjs"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.20",
+    "next": "15.5.22",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.22"
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.22",
-    "@eslint/eslintrc": "^3"
+    "typescript": "^5"
   }
 }

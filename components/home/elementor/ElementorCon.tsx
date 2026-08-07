@@ -40,8 +40,14 @@ export function EChild({ id, className = "", dataSettings, style, children }: Co
   );
 }
 
-export function EInner({ children }: { children: React.ReactNode }) {
-  return <div className="e-con-inner">{children}</div>;
+export function EInner({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={`e-con-inner w-full bg-transparent ${className}`.trim()}>{children}</div>;
 }
 
 export function EWidget({

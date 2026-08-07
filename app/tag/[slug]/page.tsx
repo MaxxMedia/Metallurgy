@@ -1,11 +1,6 @@
-import { getAllTags } from "@/lib/tags";
-import { createSlugMirrorPage } from "@/lib/content/create-slug-mirror-page";
-import { loadTagPage } from "@/lib/content/load-mirror-content";
+import { createTagReactPage } from "@/lib/content/react/create-slug-react-page";
 
-const { Page, generateMetadata, generateStaticParams } = createSlugMirrorPage({
-  getAll: getAllTags,
-  load: loadTagPage,
-});
+const { Page, generateMetadata, generateStaticParams } = createTagReactPage();
 
 export { generateMetadata, generateStaticParams };
 export default Page;
