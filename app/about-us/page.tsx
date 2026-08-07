@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { StaticPageView } from "@/components/pages/StaticPageView";
+import { ElementorMirrorPageView } from "@/components/pages/ElementorMirrorPageView";
 import { ContentThemeLayout } from "@/components/layout/ContentThemeLayout";
-import { PageContainer } from "@/components/ui/PageContainer";
 import { loadPagesFile } from "@/lib/data-store";
 import { reactNotFoundMetadata, reactPageMetadata } from "@/lib/content/react/metadata";
 
@@ -19,14 +18,14 @@ export default function AboutUsPage() {
   if (!page) notFound();
 
   return (
-    <ContentThemeLayout bodyClass={page.bodyClass ?? ""}>
-      <PageContainer>
-        <StaticPageView
-          title={page.title}
-          description={page.description}
-          bodyHtml={page.bodyHtml}
-        />
-      </PageContainer>
+    <ContentThemeLayout
+      bodyClass={page.bodyClass ?? ""}
+      cssHash={page.cssHash}
+      jsHash={page.jsHash}
+    >
+      {page.bodyHtml ? (
+        <ElementorMirrorPageView bodyHtml={page.bodyHtml} />
+      ) : null}
     </ContentThemeLayout>
   );
 }

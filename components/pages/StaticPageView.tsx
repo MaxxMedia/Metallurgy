@@ -1,4 +1,4 @@
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { ElementorMirrorPageView } from "@/components/pages/ElementorMirrorPageView";
 
 type StaticPageViewProps = {
   title: string;
@@ -6,20 +6,18 @@ type StaticPageViewProps = {
   bodyHtml?: string;
 };
 
-export function StaticPageView({ title, description, bodyHtml }: StaticPageViewProps) {
-  return (
-    <div className="elementor elementor-page w-full">
-      <SectionHeading title={title} level="h2" showDivider={false} />
-      {bodyHtml ? (
-        <div
-          className="entry-content fpg-post-content prose prose-neutral max-w-none text-[var(--bodyColor)] [&_a]:text-[var(--primaryColor)]"
-          dangerouslySetInnerHTML={{ __html: bodyHtml }}
-        />
-      ) : description ? (
-        <div className="entry-content fpg-post-content text-base leading-relaxed text-[var(--bodyColor)]">
-          <p>{description}</p>
-        </div>
-      ) : null}
-    </div>
-  );
+export function StaticPageView({ description, bodyHtml }: StaticPageViewProps) {
+  if (bodyHtml?.trim()) {
+    return <ElementorMirrorPageView bodyHtml={bodyHtml} />;
+  }
+
+  if (description) {
+    return (
+      <div className="entry-content fpg-post-content w-full max-w-full text-base leading-relaxed text-[var(--bodyColor)]">
+        <p>{description}</p>
+      </div>
+    );
+  }
+
+  return null;
 }

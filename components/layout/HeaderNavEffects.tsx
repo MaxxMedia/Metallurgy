@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import {
   initMegaMenuElementorWidgets,
+  initMegaMenuNestedTabs,
   markHeaderElementorLazyLoaded,
   repositionHeaderMegaMenus,
 } from "@/lib/header-nav-layout";
@@ -72,6 +73,7 @@ function bindMegaMenuHoverInit(): void {
       item.setAttribute("data-nerio-mega-hover", "1");
       item.addEventListener("mouseenter", () => {
         initMegaMenuElementorWidgets(item);
+        initMegaMenuNestedTabs(item);
         repositionHeaderMegaMenus();
       });
     });
@@ -93,9 +95,46 @@ function preventHashJumpOnMegaParents(): void {
     });
 }
 
+function bindMegaMenuTabClicks(): void {
+  const header = document.querySelector(".rstb-header");
+  if (!header || header.getAttribute("data-nerio-mega-tabs-delegate") === "1") return;
+  header.setAttribute("data-nerio-mega-tabs-delegate", "1");
+  header.addEventListener("click", (event) => {
+    const btn = (event.target as HTMLElement | null)?.closest(
+      ".mega-menu .e-n-tab-title",
+    );
+    if (!btn || !header.contains(btn)) return;
+    const tabsRoot = btn.closest(".e-n-tabs");
+    if (!tabsRoot) return;
+    event.preventDefault();
+    const tabIndex = btn.getAttribute("data-tab-index");
+    if (!tabIndex) return;
+    tabsRoot
+      .querySelectorAll<HTMLButtonElement>(".e-n-tabs-heading .e-n-tab-title")
+      .forEach((title) => {
+        const on = title.getAttribute("data-tab-index") === tabIndex;
+        title.setAttribute("aria-selected", on ? "true" : "false");
+        title.tabIndex = on ? 0 : -1;
+      });
+    tabsRoot
+      .querySelectorAll<HTMLElement>(
+        ".e-n-tabs-content > [role='tabpanel'], .e-n-tabs-content > .e-con[data-tab-index]",
+      )
+      .forEach((panel) => {
+        panel.classList.toggle(
+          "e-active",
+          panel.getAttribute("data-tab-index") === tabIndex,
+        );
+      });
+    tabsRoot.classList.add("e-activated");
+  });
+}
+
 function syncHeaderNavLayout(): void {
   markHeaderElementorLazyLoaded();
   repositionHeaderMegaMenus();
+  initMegaMenuNestedTabs();
+  bindMegaMenuTabClicks();
   bindMobileSubMenuToggles();
   bindMegaMenuHoverInit();
   preventHashJumpOnMegaParents();

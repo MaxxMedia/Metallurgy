@@ -54,3 +54,55 @@
     max-width: 43%;
   }
 }
+
+/* Header mega menu: Elementor nested tabs (Technology / Innovation / Software) */
+@media (min-width: 1025px) {
+  .rstb-header .mega-menu .elementor-widget-n-tabs.e-n-tabs-tablet .e-n-tabs {
+    --n-tabs-direction: row !important;
+    --n-tabs-heading-display: flex !important;
+    --n-tabs-content-display: flex !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 50px;
+  }
+  .rstb-header .mega-menu .elementor-widget-n-tabs .e-n-tabs-heading {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 0 0 140px;
+    width: 140px;
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+  }
+}
+.rstb-header .mega-menu .elementor-widget-n-tabs .e-n-tabs {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 50px;
+}
+.rstb-header .mega-menu .elementor-widget-n-tabs .e-n-tabs-heading {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 0 0 140px;
+  width: 140px;
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+}
+.rstb-header .mega-menu .elementor-widget-n-tabs .e-n-tab-title {
+  display: flex !important;
+  flex-shrink: 0;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+.rstb-header .mega-menu .elementor-widget-n-tabs .e-n-tabs-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.rstb-header .mega-menu .elementor-widget-n-tabs .e-n-tabs-content > .e-con:not(.e-active) {
+  display: none !important;
+}
+.rstb-header .mega-menu .elementor-widget-n-tabs .e-n-tabs-content > .e-con.e-active {
+  display: flex !important;
+}

@@ -10,7 +10,7 @@ export function ShellClientEffects() {
       .forEach((el) => el.classList.add("e-lazyloaded"));
 
     document
-      .querySelectorAll(".elementor-323, .elementor-129")
+      .querySelectorAll(".elementor-323, .elementor-129, .elementor-4824")
       .forEach((el) => el.classList.add("e-lazyloaded"));
   }, []);
 
