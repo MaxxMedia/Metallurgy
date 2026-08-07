@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { PreloaderMark } from "@/components/ui/PreloaderMark";
 
 function hidePreloader() {
   const el = document.querySelector<HTMLElement>(".nerio-preloader, #site-preloader");
@@ -32,10 +33,7 @@ export function Preloader() {
     <div id="site-preloader" className="nerio-preloader">
       <div className="loader-container">
         <div className="loader-icon">
-          <img
-            src="/wp-content/themes/nerio/assets/img/preloader.png"
-            alt="Technology News Dark"
-          />
+          <PreloaderMark />
         </div>
       </div>
     </div>

@@ -12,6 +12,8 @@ import type {
   TrendingDataFile,
   WidgetsDataFile,
   HomeDataFile,
+  PagesDataFile,
+  DateArchivesDataFile,
 } from "@/types/data";
 
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -63,4 +65,12 @@ export function loadWidgetsFile(): WidgetsDataFile {
 
 export function loadHomeFile(): HomeDataFile {
   return readDataFile("home.json");
+}
+
+export function loadPagesFile(): PagesDataFile {
+  return readDataFile("pages.json");
+}
+
+export function loadDateArchivesFile(): DateArchivesDataFile {
+  return readDataFile("date-archives.json");
 }

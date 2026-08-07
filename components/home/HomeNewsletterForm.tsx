@@ -1,3 +1,6 @@
+"use client";
+
+import { FormEvent, useState } from "react";
 import { EWidget } from "@/components/home/elementor/ElementorCon";
 
 const SUBMIT_ARROW = (
@@ -21,6 +24,27 @@ const SUBMIT_ARROW = (
 
 /** Full-width newsletter (`f12b084` / `db9a700`) — mirror CF7 markup. */
 export function HomeNewsletterForm() {
+  const [message, setMessage] = useState("");
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const email = String(data.get("your-email") ?? "").trim();
+    const consent = data.get("your-consent");
+
+    if (!email) {
+      setMessage("Please enter your email address.");
+      return;
+    }
+    if (!consent) {
+      setMessage("Please accept the terms & conditions.");
+      return;
+    }
+
+    setMessage("Thank you for subscribing!");
+    event.currentTarget.reset();
+  }
+
   return (
     <>
       <EWidget id="cc1f6e3" widgetType="heading" bareContainer>
@@ -33,13 +57,25 @@ export function HomeNewsletterForm() {
         widgetType="fpg-cf7"
         className="elementor-widget__width-initial elementor-widget-mobile__width-inherit"
       >
-        <div className="wpcf7 no-js" id="wpcf7-f709-p302-o1" lang="en-US" dir="ltr">
+        <div
+          className="wpcf7 no-js"
+          id="wpcf7-f709-p302-o1"
+          lang="en-US"
+          dir="ltr"
+          data-wpcf7-id="709"
+        >
+          <div className="screen-reader-response">
+            <p role="status" aria-live="polite" aria-atomic="true" />
+            <ul />
+          </div>
           <form
             action="/#wpcf7-f709-p302-o1"
             method="post"
             className="wpcf7-form init"
             aria-label="Contact form"
             noValidate
+            data-status="init"
+            onSubmit={onSubmit}
           >
             <fieldset className="hidden-fields-container">
               <input type="hidden" name="_wpcf7" value="709" />
@@ -57,6 +93,7 @@ export function HomeNewsletterForm() {
                   className="wpcf7-form-control wpcf7-email wpcf7-validates-as-required wpcf7-text wpcf7-validates-as-email"
                   autoComplete="email"
                   aria-required="true"
+                  aria-invalid="false"
                   placeholder="Enter your email..."
                   type="email"
                   name="your-email"
@@ -80,7 +117,7 @@ export function HomeNewsletterForm() {
                 <span className="wpcf7-form-control wpcf7-acceptance">
                   <span className="wpcf7-list-item">
                     <label>
-                      <input type="checkbox" name="your-consent" value="1" />
+                      <input type="checkbox" name="your-consent" value="1" aria-invalid="false" />
                       <span className="wpcf7-list-item-label">
                         I have read and agree to the <a href="#"> terms &amp; conditions</a>
                       </span>
@@ -89,7 +126,13 @@ export function HomeNewsletterForm() {
                 </span>
               </span>
             </p>
-            <div className="wpcf7-response-output" aria-hidden="true" />
+            <div
+              className="wpcf7-response-output"
+              aria-hidden={message ? undefined : true}
+              aria-live="polite"
+            >
+              {message}
+            </div>
           </form>
         </div>
       </EWidget>

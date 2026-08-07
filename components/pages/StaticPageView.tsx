@@ -1,19 +1,24 @@
-import { SectionHeading } from "@/components/fpg/SectionHeading";
+
+import { ElementorMirrorPageView } from "@/components/pages/ElementorMirrorPageView";
 
 type StaticPageViewProps = {
   title: string;
   description?: string;
+  bodyHtml?: string;
 };
 
-export function StaticPageView({ title, description }: StaticPageViewProps) {
-  return (
-    <div className="elementor elementor-page">
-      <SectionHeading title={title} level="h2" />
-      {description ? (
-        <div className="entry-content fpg-post-content">
-          <p>{description}</p>
-        </div>
-      ) : null}
-    </div>
-  );
+export function StaticPageView({ description, bodyHtml }: StaticPageViewProps) {
+  if (bodyHtml?.trim()) {
+    return <ElementorMirrorPageView bodyHtml={bodyHtml} />;
+  }
+
+  if (description) {
+    return (
+      <div className="entry-content fpg-post-content w-full max-w-full text-base leading-relaxed text-[var(--bodyColor)]">
+        <p>{description}</p>
+      </div>
+    );
+  }
+
+  return null;
 }

@@ -22,15 +22,22 @@ export function getHomePageAssets(): PageAssets {
 }
 
 /** Default archive / inner page bundles (tag/category/blog) from mirror */
-export function getArchivePageAssets(bodyExtra: string): PageAssets {
-  const cssHash = "3fd97b5895d425cb30e9cdb60d4e22de";
-  const jsHash = "835be14e8b2b7249773f157bfb1c02dc";
+export function getArchivePageAssets(
+  bodyClass: string,
+  cssHash?: string,
+  jsHash?: string,
+): PageAssets {
+  const resolvedCssHash = cssHash ?? "3fd97b5895d425cb30e9cdb60d4e22de";
+  const resolvedJsHash = jsHash ?? "835be14e8b2b7249773f157bfb1c02dc";
+  const normalizedBody = bodyClass.includes("wp-theme-nerio")
+    ? bodyClass
+    : `${BASE_BODY} ${bodyClass}`;
   return {
-    cssHref: optimizerCssPath(cssHash),
-    jsBundle: optimizerJsPath(jsHash),
-    cssHash,
-    jsHash,
-    bodyClass: `${BASE_BODY} ${bodyExtra}`,
+    cssHref: optimizerCssPath(resolvedCssHash),
+    jsBundle: optimizerJsPath(resolvedJsHash),
+    cssHash: resolvedCssHash,
+    jsHash: resolvedJsHash,
+    bodyClass: normalizedBody,
   };
 }
 

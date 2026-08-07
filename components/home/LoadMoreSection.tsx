@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { Author, Category, Post } from "@/types/data";
-import { PostCard } from "@/components/fpg/PostCard";
+import { PostCard } from "@/components/ui/PostCard";
 
 type LoadMoreSectionProps = {
   initialPosts: Post[];
@@ -57,11 +57,11 @@ export function LoadMoreSection({
           showExcerpt
         />
       ))}
-      <div className="fpg-loadmore-wrapper">
+      <div className="fpg-loadmore-wrapper col-span-full flex flex-col items-center gap-2 py-4">
         {!done && hasMore ? (
           <button
             type="button"
-            className="fpg-loadmore-btn"
+            className="fpg-loadmore-btn inline-flex items-center justify-center gap-2.5 rounded-md bg-[var(--primaryColor)] px-5 py-2.5 text-sm font-medium text-white transition-all hover:opacity-90"
             onClick={onLoadMore}
             disabled={loading}
           >
