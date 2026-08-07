@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import type { Author, Category, Post } from "@/types/data";
-import { PostCard } from "@/components/fpg/PostCard";
+import { PostCard } from "@/components/ui/PostCard";
 
 type PostSliderProps = {
   posts: Post[];

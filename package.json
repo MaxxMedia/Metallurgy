@@ -10,7 +10,7 @@
     "lint": "eslint",
     "extract": "node scripts/extract-html-parts.mjs",
     "assets:sync": "node scripts/sync-uploads.mjs",
-    "home:images": "node scripts/fix-home-images.mjs && node scripts/materialize-upload-variants.mjs && node scripts/materialize-post-thumbnails.mjs",
+    "home:images": "node scripts/fix-home-images.mjs && node scripts/materialize-newsletter-assets.mjs && node scripts/materialize-upload-variants.mjs && node scripts/materialize-post-thumbnails.mjs",
     "uploads:materialize": "node scripts/materialize-upload-urls.mjs",
     "content:index": "npm run extract && npm run data:build",
     "data:build": "node scripts/build-data.mjs"

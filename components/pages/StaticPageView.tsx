@@ -1,4 +1,4 @@
-import { SectionHeading } from "@/components/fpg/SectionHeading";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 
 type StaticPageViewProps = {
   title: string;

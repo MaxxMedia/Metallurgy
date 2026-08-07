@@ -37,17 +37,17 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <ContentThemeLayout
       bodyClass={category.bodyClass ?? `${ARCHIVE_BODY} category category-${category.slug}`}
+      cssHash={category.cssHash}
+      jsHash={category.jsHash}
     >
-      <div className="mx-auto w-full max-w-6xl px-2.5 py-6">
-        <ArchiveBodyOrGrid
+      <ArchiveBodyOrGrid
         kind="category"
         bodyHtml={category.bodyHtml}
         title={category.name}
         posts={filtered}
         authors={authors}
         categories={categories}
-        />
-      </div>
+      />
     </ContentThemeLayout>
   );
 }

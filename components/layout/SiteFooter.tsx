@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Author, Category, Post, SiteMenus, SiteSettings, Tag } from "@/types/data";
-import { PostCard } from "@/components/fpg/PostCard";
+import { PostCard } from "@/components/ui/PostCard";
 
 type SiteFooterProps = {
   settings: SiteSettings;
