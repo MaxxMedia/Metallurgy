@@ -23,6 +23,7 @@ type PostCardProps = {
   onDarkHero?: boolean;
   heroGlass?: boolean;
   className?: string;
+  style?: React.CSSProperties;
 };
 
 export function PostCard({
@@ -39,6 +40,7 @@ export function PostCard({
   onDarkHero = false,
   heroGlass = false,
   className = "",
+  style,
 }: PostCardProps) {
   const author = authorForPost(post, authors);
   const category = categoryForPost(post, categories);
@@ -100,9 +102,15 @@ export function PostCard({
 
   if (variant === "floating") {
     return (
-      <div className={`${shell} ${className}`.trim()}>
+      <div className={`${shell} ${className}`.trim()} style={style}>
         <Link href={post.url} className="absolute inset-0 z-0 block">
-          <img loading="lazy" decoding="async" src={thumb} className="h-full w-full object-cover" alt="" />
+          <img
+            loading="lazy"
+            decoding="async"
+            src={thumb}
+            className="absolute inset-0 h-full w-full object-cover"
+            alt=""
+          />
           <span className="thumb-overlay pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
         </Link>
         <div className="fpg-post-content absolute inset-x-0 bottom-0 z-[2] flex flex-col p-4 sm:p-5">
