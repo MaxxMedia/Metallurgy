@@ -2,10 +2,18 @@ import fs from "fs";
 import path from "path";
 import { rewriteHtml } from "./lib/rewrite-html.mjs";
 
-const SOURCE = path.resolve(
-  "../technology-news-dark/index.html",
-);
-const OUT = path.resolve("content/extracted");
+const SOURCE = path.resolve("../technology-news-dark/index.html");
+const DATA = path.resolve("data");
+const shellPath = path.join(DATA, "shell.json");
+
+if (!fs.existsSync(SOURCE)) {
+  if (fs.existsSync(shellPath)) {
+    console.log("No mirror index.html — keeping existing data/shell.json");
+    process.exit(0);
+  }
+  console.error("Missing ../technology-news-dark/index.html and data/shell.json");
+  process.exit(1);
+}
 
 const raw = fs.readFileSync(SOURCE, "utf8");
 
@@ -33,7 +41,6 @@ const headEnd = raw.indexOf("</head>");
 const head = raw.slice(0, headEnd);
 
 const styleBlocks = [];
-const linkTags = [];
 const inlineStyleRegex =
   /<style[^>]*id="([^"]*)"[^>]*>([\s\S]*?)<\/style>/gi;
 let m;
@@ -111,14 +118,24 @@ function rewriteBootScript(content) {
 
 const jsBundle = combinedScriptMatch ? combinedScriptMatch[1] : null;
 
-fs.mkdirSync(OUT, { recursive: true });
-fs.writeFileSync(path.join(OUT, "header.html"), rewriteHtml(header));
-fs.writeFileSync(path.join(OUT, "home-main.html"), rewriteHtml(mainInner));
-fs.writeFileSync(path.join(OUT, "footer.html"), rewriteHtml(footer));
-bodyTailRaw = rewriteHtml(bodyTailRaw);
-fs.writeFileSync(path.join(OUT, "body-tail.html"), bodyTailRaw);
+fs.mkdirSync(DATA, { recursive: true });
+
 fs.writeFileSync(
-  path.join(OUT, "inline-scripts.json"),
+  path.join(DATA, "shell.json"),
+  JSON.stringify(
+    {
+      headerHtml: rewriteHtml(header),
+      footerHtml: rewriteHtml(footer),
+      bodyTailHtml: rewriteHtml(bodyTailRaw),
+      homeMainHtml: rewriteHtml(mainInner),
+    },
+    null,
+    2,
+  ),
+);
+
+fs.writeFileSync(
+  path.join(DATA, "inline-scripts.json"),
   JSON.stringify(
     inlineScripts.map((s) => ({
       ...s,
@@ -128,8 +145,9 @@ fs.writeFileSync(
     2,
   ),
 );
+
 fs.writeFileSync(
-  path.join(OUT, "head-styles.json"),
+  path.join(DATA, "head-styles.json"),
   JSON.stringify(
     {
       cssHref,
@@ -143,6 +161,6 @@ fs.writeFileSync(
   ),
 );
 
-console.log("Wrote extracted parts to", OUT);
+console.log("Wrote shell + assets to", DATA);
 console.log("CSS bundle:", cssHref);
 console.log("JS bundle:", jsBundle);

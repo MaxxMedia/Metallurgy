@@ -1,11 +1,6 @@
-import { getAllAuthors } from "@/lib/authors";
-import { createSlugMirrorPage } from "@/lib/content/create-slug-mirror-page";
-import { loadAuthorPage } from "@/lib/content/load-mirror-content";
+import { createAuthorReactPage } from "@/lib/content/react/create-slug-react-page";
 
-const { Page, generateMetadata, generateStaticParams } = createSlugMirrorPage({
-  getAll: getAllAuthors,
-  load: loadAuthorPage,
-});
+const { Page, generateMetadata, generateStaticParams } = createAuthorReactPage();
 
 export { generateMetadata, generateStaticParams };
 export default Page;

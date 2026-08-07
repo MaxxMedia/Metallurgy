@@ -45,6 +45,10 @@ export interface Author {
   name: string;
   url: string;
   avatar?: string;
+  bodyClass?: string;
+  cssHash?: string;
+  jsHash?: string;
+  bodyHtml?: string;
 }
 
 export interface Category {
@@ -57,6 +61,8 @@ export interface Category {
   color?: string;
   cssHash?: string;
   jsHash?: string;
+  bodyClass?: string;
+  bodyHtml?: string;
 }
 
 export interface Tag {
@@ -66,6 +72,8 @@ export interface Tag {
   url: string;
   cssHash?: string;
   jsHash?: string;
+  bodyClass?: string;
+  bodyHtml?: string;
 }
 
 export interface Post {
@@ -88,6 +96,9 @@ export interface Post {
   categoryColor?: string;
   cssHash: string;
   jsHash: string;
+  bodyClass?: string;
+  /** Elementor main column or WP block HTML from data:build */
+  bodyHtml?: string;
 }
 
 export interface FeaturedContent {
@@ -160,4 +171,44 @@ export interface HomeDataFile {
     ticker: number;
     homeMain: number;
   };
+}
+
+export type StaticPageSlug =
+  | "about-us"
+  | "contact"
+  | "login"
+  | "register"
+  | "blog"
+  | "search";
+
+export interface StaticPage {
+  slug: StaticPageSlug;
+  title: string;
+  description?: string;
+  bodyHtml?: string;
+  bodyClass: string;
+  cssHash: string;
+  jsHash: string;
+}
+
+export interface PagesDataFile {
+  pages: StaticPage[];
+}
+
+export type DateArchiveType = "year" | "month" | "day";
+
+export interface DateArchive {
+  type: DateArchiveType;
+  year: string;
+  month?: string;
+  day?: string;
+  title: string;
+  bodyClass: string;
+  cssHash: string;
+  jsHash: string;
+  bodyHtml?: string;
+}
+
+export interface DateArchivesDataFile {
+  archives: DateArchive[];
 }

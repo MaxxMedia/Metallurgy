@@ -1,10 +1,37 @@
 import fs from "fs";
 import path from "path";
+import { rewriteHtml } from "./lib/rewrite-html.mjs";
 
 const ROOT = path.resolve(".");
 const MIRROR = path.resolve("../technology-news-dark");
 const WP_JSON = path.join(MIRROR, "wp-json", "wp", "v2");
 const DATA_DIR = path.join(ROOT, "data");
+const POSTS_HTML_DIR = path.join(ROOT, "content", "posts");
+const LEGACY_POSTS_INDEX = path.join(ROOT, "content", "posts-index.json");
+
+const ARCHIVE_DEFAULTS = {
+  title: "Archive",
+  bodyClass:
+    "archive wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+  cssHash: "3fd97b5895d425cb30e9cdb60d4e22de",
+  jsHash: "835be14e8b2b7249773f157bfb1c02dc",
+};
+
+const PAGE_DEFAULTS = {
+  title: "Page",
+  bodyClass:
+    "page wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+  cssHash: "a660e54059afaf59ae3ea81fe5f2b73b",
+  jsHash: "f23c4515148fd2c66517c9c3a3b3df22",
+};
+
+const POST_DEFAULTS = {
+  title: "Post",
+  bodyClass:
+    "wp-singular post-template-default single single-post single-format-standard wp-theme-nerio scheme-light elementor-default elementor-kit-4659",
+  cssHash: "40a174fc24795e8619e311e6ae556546",
+  jsHash: "d0b1d1040c6ad243be3a9cc1670d5450",
+};
 
 function decodeHtml(text) {
   return text
@@ -102,12 +129,218 @@ function slugToPostId(slug, posts) {
   return post?.id ?? null;
 }
 
-const postsIndex = readJson(path.join(ROOT, "content", "posts-index.json"));
-const categoriesIndex = readJson(
-  path.join(ROOT, "content", "categories-index.json"),
+function readPreviousArray(fileName, key) {
+  const filePath = path.join(DATA_DIR, fileName);
+  if (!fs.existsSync(filePath)) return [];
+  const data = readJson(filePath);
+  return data[key] ?? data.archives ?? [];
+}
+
+function mapBySlug(items) {
+  return new Map(items.map((item) => [item.slug, item]));
+}
+
+function archiveKey(archive) {
+  if (archive.type === "year") return `year:${archive.year}`;
+  if (archive.type === "month") return `month:${archive.year}-${archive.month}`;
+  return `day:${archive.year}-${archive.month}-${archive.day}`;
+}
+
+function loadLegacyPostIndex() {
+  if (!fs.existsSync(LEGACY_POSTS_INDEX)) return new Map();
+  return mapBySlug(readJson(LEGACY_POSTS_INDEX));
+}
+
+function loadPostMainHtml(slug) {
+  const filePath = path.join(POSTS_HTML_DIR, `${slug}.html`);
+  if (!fs.existsSync(filePath)) return undefined;
+  let html = fs.readFileSync(filePath, "utf8").trim();
+  html = html.replace(/<\/main>\s*$/i, "");
+  return rewriteHtml(html);
+}
+
+function walkWpPosts(prevBySlug) {
+  const legacyBySlug = loadLegacyPostIndex();
+  const dir = path.join(WP_JSON, "posts");
+  if (!fs.existsSync(dir)) return [];
+  const rows = [];
+  for (const file of fs.readdirSync(dir)) {
+    if (!file.endsWith(".json")) continue;
+    const wp = readJson(path.join(dir, file));
+    const [year, month, day] = wp.date.slice(0, 10).split("-");
+    const legacy = legacyBySlug.get(wp.slug);
+    const prev = prevBySlug.get(wp.slug);
+    const meta = legacy ?? prev;
+    rows.push({
+      slug: wp.slug,
+      year,
+      month,
+      day,
+      title: stripSiteSuffix(wp.title.rendered),
+      bodyClass:
+        meta?.bodyClass ??
+        `${POST_DEFAULTS.bodyClass} postid-${wp.id}`,
+      cssHash: meta?.cssHash ?? POST_DEFAULTS.cssHash,
+      jsHash: meta?.jsHash ?? POST_DEFAULTS.jsHash,
+    });
+  }
+  return rows.sort((a, b) =>
+    `${a.year}${a.month}${a.day}${a.slug}`.localeCompare(
+      `${b.year}${b.month}${b.day}${b.slug}`,
+    ),
+  );
+}
+
+function walkWpTaxonomy(taxDir, prevBySlug, idPrefix) {
+  if (!fs.existsSync(taxDir)) return [];
+  return fs
+    .readdirSync(taxDir)
+    .filter((f) => f.endsWith(".json"))
+    .map((file) => {
+      const wp = readJson(path.join(taxDir, file));
+      const prev = prevBySlug.get(wp.slug);
+      return {
+        slug: wp.slug,
+        title: wp.name,
+        bodyHtml: prev?.bodyHtml,
+        bodyClass:
+          prev?.bodyClass ??
+          `${ARCHIVE_DEFAULTS.bodyClass} ${idPrefix}-${wp.id}`,
+        cssHash: prev?.cssHash ?? ARCHIVE_DEFAULTS.cssHash,
+        jsHash: prev?.jsHash ?? ARCHIVE_DEFAULTS.jsHash,
+      };
+    });
+}
+
+const PAGE_SLUGS = ["blog", "about-us", "contact", "login", "register"];
+
+function buildWpPageRows(prevBySlug) {
+  const pagesDir = path.join(WP_JSON, "pages");
+  const wpPages = [];
+  if (fs.existsSync(pagesDir)) {
+    for (const file of fs.readdirSync(pagesDir)) {
+      if (!file.endsWith(".json")) continue;
+      wpPages.push(readJson(path.join(pagesDir, file)));
+    }
+  }
+
+  const pages = [];
+  for (const slug of PAGE_SLUGS) {
+    const wp = wpPages.find((p) => p.slug === slug);
+    const prev = prevBySlug.get(slug);
+    pages.push({
+      slug,
+      title: wp ? stripSiteSuffix(wp.title.rendered) : slug,
+      bodyHtml: prev?.bodyHtml,
+      bodyClass: prev?.bodyClass ?? PAGE_DEFAULTS.bodyClass,
+      cssHash: prev?.cssHash ?? PAGE_DEFAULTS.cssHash,
+      jsHash: prev?.jsHash ?? PAGE_DEFAULTS.jsHash,
+    });
+  }
+
+  const blog = pages.find((p) => p.slug === "blog");
+  const searchPrev = prevBySlug.get("search");
+  pages.push({
+    slug: "search",
+    title: "Search",
+    bodyHtml: searchPrev?.bodyHtml,
+    bodyClass: searchPrev?.bodyClass ?? blog?.bodyClass ?? PAGE_DEFAULTS.bodyClass,
+    cssHash: searchPrev?.cssHash ?? blog?.cssHash ?? PAGE_DEFAULTS.cssHash,
+    jsHash: searchPrev?.jsHash ?? blog?.jsHash ?? PAGE_DEFAULTS.jsHash,
+  });
+
+  return pages;
+}
+
+function buildDateArchivesFromPosts(posts, prevArchives) {
+  const prevByKey = new Map(prevArchives.map((a) => [archiveKey(a), a]));
+  const archives = [];
+  const years = [...new Set(posts.map((p) => p.year))].sort();
+  for (const year of years) {
+    const prev = prevByKey.get(`year:${year}`);
+    archives.push({
+      type: "year",
+      year,
+      title: prev?.title ?? year,
+      bodyHtml: prev?.bodyHtml,
+      bodyClass: prev?.bodyClass ?? ARCHIVE_DEFAULTS.bodyClass,
+      cssHash: prev?.cssHash ?? ARCHIVE_DEFAULTS.cssHash,
+      jsHash: prev?.jsHash ?? ARCHIVE_DEFAULTS.jsHash,
+    });
+  }
+
+  const monthKeys = [
+    ...new Set(posts.map((p) => `${p.year}-${p.month}`)),
+  ].sort();
+  for (const key of monthKeys) {
+    const [year, month] = key.split("-");
+    const prev = prevByKey.get(`month:${key}`);
+    archives.push({
+      type: "month",
+      year,
+      month,
+      title: prev?.title ?? `${year}/${month}`,
+      bodyHtml: prev?.bodyHtml,
+      bodyClass: prev?.bodyClass ?? ARCHIVE_DEFAULTS.bodyClass,
+      cssHash: prev?.cssHash ?? ARCHIVE_DEFAULTS.cssHash,
+      jsHash: prev?.jsHash ?? ARCHIVE_DEFAULTS.jsHash,
+    });
+  }
+
+  const dayKeys = [
+    ...new Set(posts.map((p) => `${p.year}-${p.month}-${p.day}`)),
+  ].sort();
+  for (const key of dayKeys) {
+    const [year, month, day] = key.split("-");
+    const prev = prevByKey.get(`day:${key}`);
+    archives.push({
+      type: "day",
+      year,
+      month,
+      day,
+      title: prev?.title ?? `${year}/${month}/${day}`,
+      bodyHtml: prev?.bodyHtml,
+      bodyClass: prev?.bodyClass ?? ARCHIVE_DEFAULTS.bodyClass,
+      cssHash: prev?.cssHash ?? ARCHIVE_DEFAULTS.cssHash,
+      jsHash: prev?.jsHash ?? ARCHIVE_DEFAULTS.jsHash,
+    });
+  }
+
+  return archives;
+}
+
+function loadAuthorFromData(prevAuthors) {
+  const prev = prevAuthors.find((a) => a.slug === "istiak");
+  if (prev) return prev;
+  return {
+    id: 2,
+    slug: "istiak",
+    name: "Matt Rosnor",
+    url: "/author/istiak",
+  };
+}
+
+const prevPosts = mapBySlug(readPreviousArray("posts.json", "posts"));
+const prevCategories = mapBySlug(readPreviousArray("categories.json", "categories"));
+const prevTags = mapBySlug(readPreviousArray("tags.json", "tags"));
+const prevPages = mapBySlug(readPreviousArray("pages.json", "pages"));
+const prevArchives = readPreviousArray("date-archives.json", "archives");
+const prevAuthors = readPreviousArray("authors.json", "authors");
+
+const postsIndex = walkWpPosts(prevPosts);
+const categoriesIndex = walkWpTaxonomy(
+  path.join(WP_JSON, "categories"),
+  prevCategories,
+  "category",
 );
-const tagsIndex = readJson(path.join(ROOT, "content", "tags-index.json"));
+const tagsIndex = walkWpTaxonomy(
+  path.join(WP_JSON, "tags"),
+  prevTags,
+  "tag",
+);
+const mirrorPages = buildWpPageRows(prevPages);
 const wpPosts = loadWpPosts();
+const dateArchives = buildDateArchivesFromPosts(postsIndex, prevArchives);
 
 const categoryColors = {
   automation: "#00b5ed",
@@ -133,6 +366,15 @@ const posts = postsIndex.map((row) => {
   const categoryIds = wp?.categories ?? [];
   const tagIds = wp?.tags ?? [];
   const dateISO = wp?.date ?? `${row.year}-${row.month}-${row.day}T00:00:00`;
+  const elementorMain = loadPostMainHtml(row.slug);
+  const prevBody = prevPosts.get(row.slug)?.bodyHtml;
+  const wpBody = wp?.content?.rendered
+    ? rewriteHtml(wp.content.rendered)
+    : undefined;
+  const bodyHtml =
+    elementorMain ??
+    (prevBody?.includes("data-elementor") ? prevBody : undefined) ??
+    wpBody;
 
   return {
     id,
@@ -148,8 +390,10 @@ const posts = postsIndex.map((row) => {
     categoryIds,
     tagIds,
     featuredImage: undefined,
+    bodyClass: row.bodyClass,
     cssHash: row.cssHash,
     jsHash: row.jsHash,
+    bodyHtml,
   };
 });
 
@@ -185,6 +429,8 @@ const categories = categoriesIndex.map((row) => {
     cssHash: row.cssHash,
     jsHash: row.jsHash,
     color: categoryColors[row.slug],
+    bodyClass: row.bodyClass,
+    bodyHtml: row.bodyHtml,
   };
 });
 
@@ -216,30 +462,26 @@ const tags = tagsIndex.map((row) => {
     url: `/tag/${row.slug}`,
     cssHash: row.cssHash,
     jsHash: row.jsHash,
+    bodyClass: row.bodyClass,
+    bodyHtml: row.bodyHtml,
   };
 });
 
-const authors = [
-  {
-    id: 2,
-    slug: "istiak",
-    name: "Matt Rosnor",
-    url: "/author/istiak",
-  },
-];
+const authors = [loadAuthorFromData(prevAuthors)];
 
-const headerHtml = fs.readFileSync(
-  path.join(ROOT, "content", "extracted", "header.html"),
-  "utf8",
-);
-const homeHtml = fs.readFileSync(
-  path.join(ROOT, "content", "extracted", "home-main.html"),
-  "utf8",
-);
-const footerHtml = fs.readFileSync(
-  path.join(ROOT, "content", "extracted", "footer.html"),
-  "utf8",
-);
+function readShellForBuild() {
+  const shellPath = path.join(DATA_DIR, "shell.json");
+  if (!fs.existsSync(shellPath)) {
+    console.warn("Missing data/shell.json — run npm run extract once while mirror index exists, or commit shell.json.");
+    return { headerHtml: "", footerHtml: "", homeMainHtml: "" };
+  }
+  return readJson(shellPath);
+}
+
+const shell = readShellForBuild();
+const headerHtml = shell.headerHtml ?? "";
+const homeHtml = shell.homeMainHtml ?? "";
+const footerHtml = shell.footerHtml ?? "";
 
 const tickerSlugs = extractSlugsFromHtml(
   headerHtml,
@@ -402,5 +644,53 @@ fs.writeFileSync(
   JSON.stringify(home, null, 2),
 );
 
+const pages = mirrorPages.map((row) => {
+  let wp = null;
+  try {
+    const pageFiles = fs.readdirSync(path.join(WP_JSON, "pages"));
+    for (const file of pageFiles) {
+      if (!file.endsWith(".json")) continue;
+      const candidate = readJson(path.join(WP_JSON, "pages", file));
+      if (candidate.slug === row.slug) {
+        wp = candidate;
+        break;
+      }
+    }
+  } catch {
+    /* optional */
+  }
+  const title = wp
+    ? stripSiteSuffix(wp.title.rendered)
+    : stripSiteSuffix(row.title);
+  const description = wp
+    ? wp.excerpt.rendered.replace(/<[^>]+>/g, "").trim()
+    : undefined;
+  const bodyHtml = wp?.content?.rendered
+    ? rewriteHtml(wp.content.rendered)
+    : undefined;
+
+  return {
+    slug: row.slug,
+    title,
+    description: description ? decodeHtml(description) : undefined,
+    bodyHtml: row.bodyHtml ?? bodyHtml,
+    bodyClass: row.bodyClass,
+    cssHash: row.cssHash,
+    jsHash: row.jsHash,
+  };
+});
+
+fs.writeFileSync(
+  path.join(DATA_DIR, "date-archives.json"),
+  JSON.stringify({ archives: dateArchives }, null, 2),
+);
+
+fs.writeFileSync(
+  path.join(DATA_DIR, "pages.json"),
+  JSON.stringify({ pages }, null, 2),
+);
+
 console.log(`Wrote data layer → ${DATA_DIR}`);
-console.log(`  posts: ${posts.length}, categories: ${categories.length}, tags: ${tags.length}`);
+console.log(
+  `  posts: ${posts.length}, categories: ${categories.length}, tags: ${tags.length}, pages: ${pages.length}`,
+);

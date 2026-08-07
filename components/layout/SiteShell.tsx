@@ -5,7 +5,6 @@ import { Preloader } from "@/components/layout/Preloader";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { ShellClientEffects } from "@/components/layout/ShellClientEffects";
 import { ShellLegacyScripts } from "@/components/layout/ShellLegacyScripts";
-import { ShellLegacyStyles } from "@/components/layout/ShellLegacyStyles";
 import { readInlineLegacyScripts } from "@/lib/extracted-content";
 import { getHomePageAssets } from "@/lib/page-assets";
 
@@ -19,7 +18,6 @@ const shellInlineScripts = readInlineLegacyScripts();
 export function SiteShell({ children }: SiteShellProps) {
   return (
     <>
-      <ShellLegacyStyles />
       <Preloader />
       <ScrollToTop />
       <ShellClientEffects />
@@ -28,9 +26,9 @@ export function SiteShell({ children }: SiteShellProps) {
         jsBundle={shellAssets.jsBundle}
         inlineScripts={shellInlineScripts}
       />
-      <div id="nerio-page" className="nerio-page-wrapper">
+      <div id="nerio-page" className="nerio-page-wrapper w-full max-w-full overflow-x-hidden">
         <Header />
-        <main id="nerio-content" className="nerio-content-wrapper">
+        <main id="nerio-content" className="nerio-content-wrapper w-full max-w-full overflow-x-hidden bg-black">
           {children}
         </main>
         <Footer />

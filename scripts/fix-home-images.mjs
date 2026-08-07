@@ -7,31 +7,36 @@ const MIRROR_UPLOADS = path.resolve(
   "../technology-news-dark/wp-content/uploads",
 );
 const PUBLIC_UPLOADS = path.join(ROOT, "public/wp-content/uploads");
+const SHELL_PATH = path.join(ROOT, "data/shell.json");
 
-const TARGETS = [
-  path.join(ROOT, "content/extracted/header.html"),
-  path.join(ROOT, "content/extracted/home-main.html"),
-  path.join(ROOT, "content/extracted/footer.html"),
-  path.join(ROOT, "content/extracted/body-tail.html"),
-];
-
-function patchFile(filePath, uploadsRoot) {
-  if (!fs.existsSync(filePath)) return false;
-  const raw = fs.readFileSync(filePath, "utf8");
-  const next = fixUploadImageUrls(raw, uploadsRoot);
-  if (next !== raw) {
-    fs.writeFileSync(filePath, next, "utf8");
-    console.log("Patched", path.relative(ROOT, filePath));
-    return true;
+function patchShellJson(uploadsRoot) {
+  if (!fs.existsSync(SHELL_PATH)) return false;
+  const shell = JSON.parse(fs.readFileSync(SHELL_PATH, "utf8"));
+  let changed = false;
+  for (const key of [
+    "headerHtml",
+    "footerHtml",
+    "bodyTailHtml",
+    "homeMainHtml",
+  ]) {
+    if (typeof shell[key] !== "string") continue;
+    const next = fixUploadImageUrls(shell[key], uploadsRoot);
+    if (next !== shell[key]) {
+      shell[key] = next;
+      changed = true;
+    }
   }
-  return false;
+  if (changed) {
+    fs.writeFileSync(SHELL_PATH, JSON.stringify(shell, null, 2), "utf8");
+    console.log("Patched data/shell.json");
+  }
+  return changed;
 }
 
 let patched = false;
-for (const file of TARGETS) {
-  if (patchFile(file, MIRROR_UPLOADS)) patched = true;
-}
+patched = patchShellJson(MIRROR_UPLOADS) || patched;
+patched = patchShellJson(PUBLIC_UPLOADS) || patched;
 
 if (!patched) {
-  console.log("No image URL changes needed in extracted shell.");
+  console.log("No shell image URL changes needed.");
 }
