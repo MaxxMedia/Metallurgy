@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { StaticPageView } from "@/components/pages/StaticPageView";
+
+import { ArchiveBodyOrGrid } from "@/lib/content/react/archive-body";
 import { ContentThemeLayout } from "@/components/layout/ContentThemeLayout";
-import { PageContainer } from "@/components/ui/PageContainer";
+import { getAuthors, getCategories, getPosts } from "@/lib/api";
+
 import { loadPagesFile } from "@/lib/data-store";
 import { reactNotFoundMetadata, reactPageMetadata } from "@/lib/content/react/metadata";
 
@@ -14,19 +16,32 @@ export function generateMetadata(): Metadata {
   return reactPageMetadata(page.title);
 }
 
-export default function BlogPage() {
+
+export default async function BlogPage() {
   const page = loadPagesFile().pages.find((p) => p.slug === SLUG);
   if (!page) notFound();
 
+  const [posts, authors, categories] = await Promise.all([
+    getPosts(),
+    getAuthors(),
+    getCategories(),
+  ]);
+
   return (
-    <ContentThemeLayout bodyClass={page.bodyClass ?? ""}>
-      <PageContainer>
-        <StaticPageView
-          title={page.title}
-          description={page.description}
-          bodyHtml={page.bodyHtml}
-        />
-      </PageContainer>
+    <ContentThemeLayout
+      bodyClass={page.bodyClass ?? ""}
+      cssHash={page.cssHash}
+      jsHash={page.jsHash}
+    >
+      <ArchiveBodyOrGrid
+        kind="category"
+        bodyHtml={page.bodyHtml}
+        title="Blog"
+        posts={posts}
+        authors={authors}
+        categories={categories}
+      />
+
     </ContentThemeLayout>
   );
 }

@@ -40,9 +40,9 @@ export function SectionHeading({
 
   if (showDivider) {
     return (
-      <div className="flex w-full items-center gap-6">
 
-        {/* Heading */}
+      <div className="mb-8 flex w-full flex-row flex-nowrap items-center gap-3 sm:gap-4">
+
         <div
           className={`elementor-element elementor-element-${headingId} elementor-widget elementor-widget-heading shrink-0`}
         >
@@ -53,35 +53,30 @@ export function SectionHeading({
           </Level>
         </div>
 
-        {/* Divider */}
-        <div className="flex flex-1 items-center">
-          {/* Left Diamond */}
-          <span className="w-[8px] h-[8px] rotate-45 bg-[#1E88FF] shrink-0" />
-
-          {/* Double Line */}
-          <div className="flex-1 mx-4">
-            <div className="h-px bg-[#2B2F36]" />
-            <div className="mt-[3px] h-px bg-[#2B2F36]" />
+        <div
+          className={`elementor-element elementor-element-${dividerId} elementor-widget elementor-widget-fpg-divider rs-divider dot-enable flex min-h-[20px] min-w-0 flex-1 items-center`}
+        >
+          <div className="elementor-widget-container flex w-full items-center gap-0">
+            <span className="h-px min-w-0 flex-1 bg-[var(--e-global-color-4f49e74,#ffffff14)]" />
+            <span className="mx-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-[var(--primaryColor,#0073ff)]" />
+            <span className="h-px min-w-0 flex-1 bg-[var(--e-global-color-4f49e74,#ffffff14)]" />
           </div>
-
-          {/* Right Diamond */}
-          <span className="w-[8px] h-[8px] rotate-45 bg-[#1E88FF] shrink-0" />
         </div>
-
-        {/* View All */}
-        {viewAllHref && (
+        {viewAllHref ? (
           <div
             className={`elementor-element elementor-element-${buttonId} elementor-widget elementor-widget-fpg-button shrink-0`}
           >
-            <Link
-              href={viewAllHref}
-              className="flex items-center gap-2 text-white font-semibold whitespace-nowrap"
-            >
-              {viewAllWithIcon && VIEW_ALL_ICON}
-              View All
-            </Link>
+            <div className="elementor-widget-container">
+              <Link
+                className="rs-button style-default inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium text-[var(--titleColor,#fff)] transition-opacity hover:opacity-80"
+                href={viewAllHref}
+              >
+                {viewAllWithIcon ? VIEW_ALL_ICON : null}
+                <span className="button-text">View All</span>
+              </Link>
+            </div>
           </div>
-        )}
+        ) : null}
       </div>
     );
   }

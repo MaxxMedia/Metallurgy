@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArchiveBodyOrGrid } from "@/lib/content/react/archive-body";
 import { ContentThemeLayout } from "@/components/layout/ContentThemeLayout";
 import { PageContainer } from "@/components/ui/PageContainer";
+
 import { getAuthors, getCategories, getPosts } from "@/lib/api";
 import { loadAuthorsFile } from "@/lib/data-store";
 import { reactNotFoundMetadata, reactPageMetadata } from "@/lib/content/react/metadata";
@@ -38,17 +39,19 @@ export default async function AuthorPage({ params }: Props) {
   return (
     <ContentThemeLayout
       bodyClass={author.bodyClass ?? `${ARCHIVE_BODY} author author-${author.slug}`}
+
+      cssHash={author.cssHash}
+      jsHash={author.jsHash}
     >
-      <PageContainer>
-        <ArchiveBodyOrGrid
-          kind="author"
-          bodyHtml={author.bodyHtml}
-          author={author}
-          posts={filtered}
-          authors={authors}
-          categories={categories}
-        />
-      </PageContainer>
+      <ArchiveBodyOrGrid
+        kind="author"
+        bodyHtml={author.bodyHtml}
+        author={author}
+        posts={filtered}
+        authors={authors}
+        categories={categories}
+      />
+
     </ContentThemeLayout>
   );
 }

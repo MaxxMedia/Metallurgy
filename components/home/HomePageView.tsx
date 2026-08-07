@@ -71,9 +71,6 @@ export function HomePageView({
         <HomeNewsletterBand />
       </div>
 
-
-
-   
     </div>
   );
 }

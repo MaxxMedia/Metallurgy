@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArchiveBodyOrGrid } from "@/lib/content/react/archive-body";
 import { ContentThemeLayout } from "@/components/layout/ContentThemeLayout";
 import { PageContainer } from "@/components/ui/PageContainer";
+
 import { getAuthors, getCategories, getPosts } from "@/lib/api";
 import { loadTagsFile } from "@/lib/data-store";
 import { reactNotFoundMetadata, reactPageMetadata } from "@/lib/content/react/metadata";
@@ -36,17 +37,21 @@ export default async function TagPage({ params }: Props) {
   const filtered = posts.filter((p) => p.tagIds.includes(tag.id));
 
   return (
-    <ContentThemeLayout bodyClass={tag.bodyClass ?? `${ARCHIVE_BODY} tag tag-${tag.slug}`}>
-      <PageContainer>
-        <ArchiveBodyOrGrid
-          kind="tag"
-          bodyHtml={tag.bodyHtml}
-          title={tag.name}
-          posts={filtered}
-          authors={authors}
-          categories={categories}
-        />
-      </PageContainer>
+
+    <ContentThemeLayout
+      bodyClass={tag.bodyClass ?? `${ARCHIVE_BODY} tag tag-${tag.slug}`}
+      cssHash={tag.cssHash}
+      jsHash={tag.jsHash}
+    >
+      <ArchiveBodyOrGrid
+        kind="tag"
+        bodyHtml={tag.bodyHtml}
+        title={tag.name}
+        posts={filtered}
+        authors={authors}
+        categories={categories}
+      />
+
     </ContentThemeLayout>
   );
 }
