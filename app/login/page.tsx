@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { ElementorMirrorPageView } from "@/components/pages/ElementorMirrorPageView";
+import { LoginFormBridge } from "@/components/auth/LoginFormBridge";
+import { RegisterFormBridge } from "@/components/auth/RegisterFormBridge";
 import { ContentThemeLayout } from "@/components/layout/ContentThemeLayout";
 
 import { loadPagesFile } from "@/lib/data-store";
@@ -28,6 +30,8 @@ export default function LoginPage() {
       {page.bodyHtml ? (
         <ElementorMirrorPageView bodyHtml={page.bodyHtml} />
       ) : null}
+      <LoginFormBridge />
+      <RegisterFormBridge />
     </ContentThemeLayout>
   );
 }
