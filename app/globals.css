@@ -1,5 +1,66 @@
 @import "tailwindcss";
 
+/* Admin console — scoped polish inside site shell */
+.admin-console {
+  font-feature-settings: "ss01", "cv01";
+}
+
+.admin-console main table {
+  border-spacing: 0;
+}
+
+/* Sidebar: isolate from Elementor / theme button & link styles */
+.admin-sidebar .admin-sidebar-link {
+  box-sizing: border-box;
+  margin: 0;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.admin-sidebar nav button.admin-sidebar-link {
+  appearance: none;
+  border: none;
+  background: transparent;
+}
+
+.admin-sidebar nav button.admin-sidebar-link--active {
+  background: rgba(0, 115, 255, 0.12);
+}
+
+.admin-sidebar .admin-sidebar-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-sidebar i[class^="ri-"] {
+  font-style: normal;
+  line-height: 1;
+}
+
+.user-sidebar .user-sidebar-link {
+  box-sizing: border-box;
+  margin: 0;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.user-sidebar nav button.user-sidebar-link {
+  appearance: none;
+  border: none;
+  background: transparent;
+}
+
+.user-sidebar nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 /* Preloader center mark — same pulse as theme `.loader-icon img` */
 .nerio-preloader .loader-container .loader-icon .preloader-mark {
   animation: loader-pulse 900ms infinite alternate;
