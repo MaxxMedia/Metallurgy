@@ -145,7 +145,7 @@ export function RegisterFormBridge() {
       const loginRes = await fetch(`${getApiBaseUrl()}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_name: email, password }),
+        body: JSON.stringify({ email, password }),
       });
       const loginData = (await loginRes.json().catch(() => ({}))) as {
         error?: string;
@@ -157,7 +157,7 @@ export function RegisterFormBridge() {
       if (!loginRes.ok || !loginData.token || !loginData.user) {
         setError(
           loginData.error ||
-            "Verified! Please sign in on the login page.",
+          "Verified! Please sign in on the login page.",
         );
         setPending(false);
         router.push("/login");

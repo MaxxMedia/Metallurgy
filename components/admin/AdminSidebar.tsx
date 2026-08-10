@@ -6,6 +6,7 @@ import { clearSession } from "@/lib/auth/session";
 
 export type AdminTab =
   | "overview"
+  | "articles"
   | "companies"
   | "packages"
   | "suppliers"
@@ -13,6 +14,7 @@ export type AdminTab =
 
 const NAV: { id: AdminTab; label: string; icon: string }[] = [
   { id: "overview", label: "Overview", icon: "ri-dashboard-3-line" },
+  { id: "articles", label: "Articles", icon: "ri-article-line" },
   { id: "companies", label: "Companies", icon: "ri-building-4-line" },
   { id: "packages", label: "Packages", icon: "ri-vip-crown-2-line" },
   { id: "suppliers", label: "Suppliers", icon: "ri-store-2-line" },

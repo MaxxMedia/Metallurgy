@@ -74,7 +74,9 @@ export function LoginFormBridge() {
 
       const fd = new FormData(form);
 
-      const user_name = String(fd.get("user_name") ?? "").trim();
+      const user_name = String(
+        fd.get("user_name") ?? fd.get("email") ?? fd.get("username") ?? ""
+      ).trim();
 
       const password = String(fd.get("password") ?? "");
 
@@ -100,7 +102,7 @@ export function LoginFormBridge() {
 
           headers: { "Content-Type": "application/json" },
 
-          body: JSON.stringify({ user_name, password }),
+          body: JSON.stringify({ email: user_name, password }),
 
         });
 
