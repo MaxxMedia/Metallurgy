@@ -130,12 +130,84 @@ function bindMegaMenuTabClicks(): void {
   });
 }
 
+function bindOffcanvasToggles(): void {
+  const setOpen = (wrap: Element, open: boolean) => {
+    const panel = wrap.querySelector<HTMLElement>(".rstb-offcanvas-panel");
+    const toggle = wrap.querySelector<HTMLElement>(".offcanvas-toggle");
+
+    if (!panel || !toggle) return;
+
+    panel.classList.toggle("show-offcanvas", open);
+    toggle.classList.toggle("panel-open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    panel.setAttribute("aria-hidden", open ? "false" : "true");
+    document.body.style.overflow = open ? "hidden" : "";
+  };
+
+  document.querySelectorAll(".rstb-offcanvas-wrap").forEach((wrap) => {
+    const panel = wrap.querySelector<HTMLElement>(".rstb-offcanvas-panel");
+    const toggle = wrap.querySelector<HTMLElement>(".offcanvas-toggle");
+
+    if (!panel || !toggle) return;
+
+    toggle.setAttribute("type", "button");
+    toggle.setAttribute(
+      "aria-expanded",
+      panel.classList.contains("show-offcanvas") ? "true" : "false",
+    );
+    panel.setAttribute(
+      "aria-hidden",
+      panel.classList.contains("show-offcanvas") ? "false" : "true",
+    );
+  });
+
+  if (document.body.getAttribute("data-nerio-offcanvas-delegate") !== "1") {
+    document.body.setAttribute("data-nerio-offcanvas-delegate", "1");
+
+    document.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+
+      const toggle = target.closest(".rstb-offcanvas-wrap .offcanvas-toggle");
+      if (toggle) {
+        event.preventDefault();
+        const wrap = toggle.closest(".rstb-offcanvas-wrap");
+        if (!wrap) return;
+        const panel = wrap.querySelector(".rstb-offcanvas-panel");
+        setOpen(wrap, !panel?.classList.contains("show-offcanvas"));
+        return;
+      }
+
+      const close = target.closest(
+        ".rstb-offcanvas-wrap .offcanvas-close, .rstb-offcanvas-wrap .offcanvas-overly",
+      );
+      if (close) {
+        event.preventDefault();
+        const wrap = close.closest(".rstb-offcanvas-wrap");
+        if (!wrap) return;
+        setOpen(wrap, false);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      document
+        .querySelectorAll(".rstb-offcanvas-wrap .rstb-offcanvas-panel.show-offcanvas")
+        .forEach((panel) => {
+          const wrap = panel.closest(".rstb-offcanvas-wrap");
+          if (wrap) setOpen(wrap, false);
+        });
+    });
+  }
+}
+
 function syncHeaderNavLayout(): void {
   markHeaderElementorLazyLoaded();
   repositionHeaderMegaMenus();
   initMegaMenuNestedTabs();
   bindMegaMenuTabClicks();
   bindMobileSubMenuToggles();
+  bindOffcanvasToggles();
   bindMegaMenuHoverInit();
   preventHashJumpOnMegaParents();
 }
