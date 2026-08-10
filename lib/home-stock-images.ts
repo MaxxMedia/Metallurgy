@@ -77,7 +77,14 @@ export function stockImageForPost(
 }
 
 export function sizedFromMedium(mediumUrl: string, size: "thumb" | "medium" | "large"): string {
-  if (size === "medium") return mediumUrl;
+  if (
+    size === "medium" ||
+    mediumUrl.startsWith("http://") ||
+    mediumUrl.startsWith("https://") ||
+    mediumUrl.startsWith("/uploads/")
+  ) {
+    return mediumUrl;
+  }
   const ext = mediumUrl.match(/\.(jpg|jpeg|png|webp)$/i)?.[0] ?? ".jpg";
   const stem = mediumUrl.replace(ext, "").replace(/-\d+x\d+$/i, "");
   if (size === "thumb") return `${stem}-150x150${ext}`;

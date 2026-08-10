@@ -34,7 +34,9 @@ export function HomePageView({
   const recent = resolveSectionPosts(posts, sections.recentNewsIds, 3);
   const trending = resolveSectionPosts(posts, sections.trendingIds, 6);
   const popular = resolveSectionPosts(posts, sections.popularSliderIds, 10);
-  const latest = resolveSectionPosts(posts, sections.latestNewsIds, 6);
+  const latest = [...posts]
+    .sort((a, b) => Date.parse(b.dateISO) - Date.parse(a.dateISO))
+    .slice(0, 6);
   const midGrid = resolveSectionPosts(posts, sections.midGridIds, 3);
   const sidebarPopular = resolveSectionPosts(posts, sections.sidebarPopularIds, 4);
 

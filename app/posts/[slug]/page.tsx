@@ -4,17 +4,15 @@ import { ElementorHtmlBody } from "@/components/content/ElementorHtmlBody";
 import { ContentThemeLayout } from "@/components/layout/ContentThemeLayout";
 import { PostArticleView } from "@/components/post/PostArticleView";
 import {
-  getPostByPath,
   getPostBySlug,
   getAuthorBySlug,
   getAuthors,
   getCategoryBySlug,
 } from "@/lib/api";
-import { loadPostsFile } from "@/lib/data-store";
 import { reactNotFoundMetadata, reactPageMetadata } from "@/lib/content/react/metadata";
 
 type PageProps = {
-  params: Promise<{ month: string; day: string; slug: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 const SINGLE_BODY =
@@ -26,34 +24,26 @@ function isElementorPostBody(html?: string) {
   );
 }
 
-export function generateStaticParams() {
-  return loadPostsFile().posts.map((post) => ({
-    month: post.month,
-    day: post.day,
-    slug: post.slug,
-  }));
-}
-
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { month, day, slug } = await params;
-  const post = await getPostByPath(month, day, slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   if (!post) return reactNotFoundMetadata();
   return reactPageMetadata(post.title);
 }
 
-export default async function PostPage({ params }: PageProps) {
-  const { month, day, slug } = await params;
-  const post = (await getPostByPath(month, day, slug)) || (await getPostBySlug(slug));
+export default async function PostDetailBySlugPage({ params }: PageProps) {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   if (!post) notFound();
 
   const author =
+    (await getAuthors()).find((a) => a.id === post.authorId) ??
     (await getAuthorBySlug("istiak")) ??
-    (await getAuthors()).find((a) => a.id === post.authorId);
+    (await getAuthors())[0];
+
   const category = post.categorySlug
     ? await getCategoryBySlug(post.categorySlug)
     : undefined;
-
-  if (!author) notFound();
 
   const useElementor = isElementorPostBody(post.bodyHtml);
 
@@ -66,7 +56,7 @@ export default async function PostPage({ params }: PageProps) {
       {useElementor && post.bodyHtml ? (
         <ElementorHtmlBody html={post.bodyHtml} />
       ) : (
-        <PostArticleView post={post} author={author} category={category} />
+        <PostArticleView post={post} author={author!} category={category} />
       )}
     </ContentThemeLayout>
   );

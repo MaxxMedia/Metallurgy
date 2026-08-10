@@ -45,6 +45,9 @@ export interface Author {
   name: string;
   url: string;
   avatar?: string;
+  avatarUrl?: string;
+  role?: string;
+  bio?: string;
   bodyClass?: string;
   cssHash?: string;
   jsHash?: string;
@@ -99,6 +102,26 @@ export interface Post {
   bodyClass?: string;
   /** Elementor main column or WP block HTML from data:build */
   bodyHtml?: string;
+  contentBlocks?: Array<{
+    id: string;
+    type: "paragraph" | "heading" | "image" | "gallery" | "quote";
+    content?: string;
+    level?: 1 | 2 | 3;
+    text?: string;
+    url?: string;
+    caption?: string;
+    alt?: string;
+    images?: Array<{ url: string; caption?: string }>;
+    columns?: 2 | 3 | 4;
+    quote?: string;
+    author?: string;
+  }>;
+  facebookUrl?: string;
+  linkedinUrl?: string;
+  twitterUrl?: string;
+  youtubeUrl?: string;
+  email?: string;
+  whatsappNumber?: string;
 }
 
 export interface FeaturedContent {
